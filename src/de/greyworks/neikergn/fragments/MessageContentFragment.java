@@ -62,7 +62,6 @@ public class MessageContentFragment extends Fragment implements Observer {
 
 		pDiag = new ProgressDialog(Statics.ctx);
 		pDiag.setMessage("Lade Meldung ...");
-		pDiag.setCancelable(false);
 		pDiag.show();
 		// initialize http module;
 		http.addObserver(this);
