@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="orange_0">#e6d273</color>
+    <color name="orange_1">#e6daa1</color>
+    <color name="orange_2">#e6e0c3</color>
+    
+    
+    <color name="violett_0">#e673e6</color>
+    <color name="violett_1">#e6a1e6</color>
+    <color name="violett_2">#e6c3e6</color>
+    
+    <color name="blue_0">#73d2e6</color>
+    <color name="blue_1">#a1dae6</color>
+    <color name="blue_2">#c3e0e6</color>
+    
+    <color name="green_0">#b7e673</color>
+    <color name="green_1">#c9e6a1</color>
+    <color name="green_2">#d7e6c3</color>
+    <color name="green_d">#50800d</color>
+    
+    <drawable name="list_normal">#f444</drawable>
+    <drawable name="list_selected">#f666</drawable>
+    
+    
+</resources>

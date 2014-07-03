@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Neikergn</string>
+    <string name="title_news">Nachrichten</string>
+    <string name="title_messages">Meldungen</string>
+    <string name="title_mitteilungsblatt">Mitteilungsblatt</string>
+    <string name="title_imBild">Neunkirchen im Bild</string>
+    <string name="title_termine">Termine</string>
+	<string name="title_documents">Nützliche Dokumente</string>
+	<string name="title_about">Über</string>
+	
+    <string name="navigation_drawer_open">Navigation öffnen</string>
+    <string name="navigation_drawer_close">Navigation schließen</string>
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_refresh">Aktualisieren</string>
+    <string name="label_abfallkalender">Abfallkalender</string>
+    <string name="label_downloadinfo">Grau hinterlegte Dateien müssen erst herunter geladen werden.\nFür das Öffnen der Dateien ist evtl. eine App wie Quickoffice nötig.</string>
+    <string name="msg_unimplemented">In dieser Version noch nicht verfügbar</string>
+    <string name="about_info"></string>
+    
+    
+    <string name="about_homepage">Die Neunkirchener Homepage und diese App werden von ehrenamtlichen Mitarbeitern des Webteams in ihrer Freizeit gepflegt und gestaltet.</string>
+    <string name="about_inahlt">Diese App bezieht ihre Inhalte direkt von www.neunkirchen-am-brand.de. Fragen und Anmerkungen zu Inhalten bitte daher direkt an das Webteam.</string>
+    <string name="mail_webteam">web-team@neikergn.de</string>
+    <string name="about_app">Diese App wird vom Webteam-Mitglied Michael Grau gepflegt.\n
+        Probleme, Anregungen oder Wünsche zur App? Schreiben Sie mir gerne eine Mail!</string>
+    <string name="about_app_aa">This app is brought to you by Admiral A. aka. Grey.\n
+        Ask Admiral A. for awesome!</string>
+    <string name="mail_grey">michael@neikergn.de</string>
+    
+    <string name="faq">
+        == Fragen und Antworten ==\n
+        \n
+        => Wird es eine IPhone App geben?\n
+        Zur Sicherheit schreibe ich mal: Nein.\n
+        Momentan haben wir keinen IOS Programmierer, der sich der Sache annehmen kann.\n
+        \n
+        => Kann der Müllkalender nicht direkt in die App eingebunden werden?\n
+        Theoretisch ja. Das ist in Planung und wird in den nächsten Versionen wahrscheinlich umgesetzt.\n
+        \n
+        => Ich hätte gerne noch . . .\n
+        Wie oben beschrieben: Schreiben Sie gerne eine kleine Mail an mich. Ich werde dann sehen, was sich machen lässt.
+    </string>
+    
+    <string name="changelog">
+        == Changelog ==\n
+        \n
+        0.9b\n
+        -Interne Betaversion. Alle Funktionen vorhanden, bis auf Neunkirchen im Bild\n
+    </string>
+    
+</resources>

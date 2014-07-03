@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:layout_width="fill_parent"
+ android:layout_height="wrap_content"
+ android:orientation="vertical"
+ android:padding="3dip"
+>
+
+    <WebView
+        android:id="@+id/nib_web"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+     <TextView
+         android:id="@+id/nib_title"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_centerHorizontal="true"
+         android:layout_below="@+id/nib_web"
+         android:paddingLeft="3dp"
+         android:text="Lade.."
+         android:textColor="#000"
+         android:textSize="14sp"
+         android:textStyle="bold" />
+
+     <TextView
+         android:id="@+id/nib_text"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/nib_title"
+         android:layout_centerHorizontal="true"
+         android:paddingBottom="4dp"
+         android:paddingLeft="3dp"
+         android:textColor="#444" />
+
+</RelativeLayout>
