@@ -138,8 +138,12 @@ public class TerminModule extends Observable implements
 	 */
 	@Override
 	public void update(Observable observable, Object data) {
+		http.deleteObserver(this);
+		// if network error - take the easy way out
+		if (!http.getSuccess()) {
+			return;
+		}
 		try {
-			http.deleteObserver(this);
 			JSONArray terminObjs = new JSONArray(http.getContent());
 			for (int i = 0; i < terminObjs.length(); i++) {
 				TerminItem item = TerminItem.fromWeb(terminObjs

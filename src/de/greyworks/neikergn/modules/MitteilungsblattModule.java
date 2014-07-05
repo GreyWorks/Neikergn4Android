@@ -93,6 +93,10 @@ public class MitteilungsblattModule extends Observable implements
 	@Override
 	public void update(Observable observable, Object data) {
 		http.deleteObserver(this);
+		// if network error - take the easy way out
+		if (!http.getSuccess()) {
+			return;
+		}
 		try {
 			JSONArray mBlattObjs = new JSONArray(http.getContent());
 			for (int i = 0; i < mBlattObjs.length(); i++) {
@@ -138,8 +142,9 @@ public class MitteilungsblattModule extends Observable implements
 	public void cleanUp() {
 		Collections.sort(mitteilungsblattItems);
 		while (mitteilungsblattItems.size() > 24) {
-			MitteilungsblattItem item = mitteilungsblattItems.get(mitteilungsblattItems.size() - 1);
-			if(item.getLocalFile().exists()) {
+			MitteilungsblattItem item = mitteilungsblattItems
+					.get(mitteilungsblattItems.size() - 1);
+			if (item.getLocalFile().exists()) {
 				item.getLocalFile().delete();
 			}
 			mitteilungsblattItems.remove(item);

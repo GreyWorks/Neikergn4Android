@@ -82,6 +82,8 @@ public class NewsContentFragment extends Fragment implements Observer {
 	 */
 	@Override
 	public void update(Observable observable, Object data) {
+		// Show toast on error
+		http.getStatus();
 		String text = http.getContent().replaceAll("(\r\n|\n)", "<br />");
 		text = text.replaceAll("images/presse",
 				"http://www.neunkirchen-am-brand.de/images/presse");

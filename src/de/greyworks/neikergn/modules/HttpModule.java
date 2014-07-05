@@ -13,10 +13,13 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.os.AsyncTask;
+import android.util.Log;
 import de.greyworks.neikergn.Statics;
 
 public class HttpModule extends Observable {
 	String content;
+	int statusCode;
+	String statusLine;
 	HttpModule that = this;
 	String encoding = "ISO-8859-1";
 	
@@ -34,18 +37,29 @@ public class HttpModule extends Observable {
 		return content;
 	}
 	
+	public int getStatus() {
+		if(statusCode != 200) {
+			Statics.showToast("Netzwerkfehler. Status Code:" + statusLine);
+			Log.e(Statics.TAG, "HTTP ERROR - Code:" + statusLine);
+		}
+		return statusCode;
+	}
+	
+	public boolean getSuccess() {
+		return (getStatus() == 200);
+	}
+	
 	private class HttpTask extends AsyncTask<String, Void, String>{
 
 		@Override
 		protected String doInBackground(String... params) {
-			String page = "";
-
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpGet httpGet = new HttpGet(params[0]);
 			
 			try {
 				HttpResponse response = httpClient.execute(httpGet);
-				page = response.toString();
+				statusCode = response.getStatusLine().getStatusCode();
+				statusLine = response.getStatusLine().toString();
 				InputStream in = response.getEntity().getContent();
 				BufferedReader reader = new BufferedReader(new InputStreamReader(in, encoding));
 				String line = "";
@@ -56,7 +70,7 @@ public class HttpModule extends Observable {
 					}
 					sb.append(line);
 				}
-				page = sb.toString();
+				content = sb.toString();
 				reader.close();
 				in.close();
 				
@@ -65,13 +79,12 @@ public class HttpModule extends Observable {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			return page;
+			return content;
 		}
 		
 		@Override
 		protected void onPostExecute(String result) {
 			Statics.ovr.setProgressBar(-1);
-			that.content = result;
 			that.setChanged();
 			that.notifyObservers();
 		}

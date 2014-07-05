@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -114,9 +113,13 @@ public class NewsModule extends Observable implements ContentModule<NewsItem>,
 
 	@Override
 	public void cleanUp() {
-		for (Iterator<NewsItem> iterator = newsItems.iterator(); iterator.hasNext();) {
-			NewsItem item = (NewsItem) iterator.next();
-			if(item.getAge() > 14) {
+		// No iterator here
+		// Causes ConcurrentModificationException
+		// #fts #planb
+		// FIXED #4 Startup Crash
+		for (int i = 0; i < newsItems.size(); i++) {
+			NewsItem item = newsItems.get(i);
+			if (item.getAge() > 14) {
 				newsItems.remove(item);
 			}
 		}
@@ -128,8 +131,12 @@ public class NewsModule extends Observable implements ContentModule<NewsItem>,
 	 */
 	@Override
 	public void update(Observable observable, Object data) {
+		http.deleteObserver(this);
+		// if network error - take the easy way out
+		if (!http.getSuccess()) {
+			return;
+		}
 		try {
-			http.deleteObserver(this);
 			JSONArray newsObjs = new JSONArray(http.getContent());
 			for (int i = 0; i < newsObjs.length(); i++) {
 				NewsItem item = NewsItem.fromWeb(newsObjs.getJSONObject(i));
@@ -146,6 +153,6 @@ public class NewsModule extends Observable implements ContentModule<NewsItem>,
 			Log.e(Statics.TAG, "JSON Error in News Module");
 			e.printStackTrace();
 		}
-	}
 
+	}
 }

@@ -15,8 +15,8 @@ import android.util.Log;
 import de.greyworks.neikergn.Statics;
 import de.greyworks.neikergn.containers.NiBItem;
 
-public class NiBModule extends Observable implements
-		ContentModule<NiBItem>, Observer {
+public class NiBModule extends Observable implements ContentModule<NiBItem>,
+		Observer {
 	public static String fileName = "nib.json";
 	private ArrayList<NiBItem> nibItems = new ArrayList<NiBItem>();
 	HttpModule http = new HttpModule();
@@ -73,12 +73,11 @@ public class NiBModule extends Observable implements
 
 	@Override
 	public void cleanUp() {
-		/*for (Iterator<NiBItem> iterator = nibItems.iterator(); iterator.hasNext();) {
-			NiBItem item = (NiBItem) iterator.next();
-			if (item.getAge() > 90) {
-				nibItems.remove(item);
-			}
-		}*/
+		/*
+		 * for (Iterator<NiBItem> iterator = nibItems.iterator();
+		 * iterator.hasNext();) { NiBItem item = (NiBItem) iterator.next(); if
+		 * (item.getAge() > 90) { nibItems.remove(item); } }
+		 */
 		Collections.sort(nibItems);
 	}
 
@@ -125,11 +124,14 @@ public class NiBModule extends Observable implements
 	@Override
 	public void update(Observable observable, Object data) {
 		http.deleteObserver(this);
+		// if network error - take the easy way out
+		if (!http.getSuccess()) {
+			return;
+		}
 		try {
 			JSONArray nibObjs = new JSONArray(http.getContent());
 			for (int i = 0; i < nibObjs.length(); i++) {
-				NiBItem item = NiBItem
-						.fromWeb(nibObjs.getJSONObject(i));
+				NiBItem item = NiBItem.fromWeb(nibObjs.getJSONObject(i));
 				if (!nibItems.contains(item)) {
 					nibItems.add(item);
 				}

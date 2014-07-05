@@ -74,7 +74,8 @@ public class MessageModule extends Observable implements
 
 	@Override
 	public void cleanUp() {
-		for (Iterator<MessageItem> iterator = messageItems.iterator(); iterator.hasNext();) {
+		for (Iterator<MessageItem> iterator = messageItems.iterator(); iterator
+				.hasNext();) {
 			MessageItem item = (MessageItem) iterator.next();
 			if (item.getAge() > 30) {
 				messageItems.remove(item);
@@ -126,6 +127,10 @@ public class MessageModule extends Observable implements
 	@Override
 	public void update(Observable observable, Object data) {
 		http.deleteObserver(this);
+		// if network error - take the easy way out
+		if (!http.getSuccess()) {
+			return;
+		}
 		try {
 			JSONArray msgObjs = new JSONArray(http.getContent());
 			for (int i = 0; i < msgObjs.length(); i++) {

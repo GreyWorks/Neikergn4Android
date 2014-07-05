@@ -82,6 +82,8 @@ public class MessageContentFragment extends Fragment implements Observer {
 	 */
 	@Override
 	public void update(Observable observable, Object data) {
+		// Show toast on error
+		http.getStatus();
 		content = "<table><tr><td><b>" + item.getTitle()
 				+ "</b></td></tr><tr><td>" + item.getDate() + "<br />&nbsp;</td></tr><tr><td>"
 				+ http.getContent().replaceAll("(\r\n|\n)", "<br />") + "</td></tr></table>";

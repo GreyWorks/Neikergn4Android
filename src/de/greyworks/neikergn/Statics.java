@@ -9,8 +9,11 @@ import de.greyworks.neikergn.modules.NewsModule;
 import de.greyworks.neikergn.modules.NiBModule;
 import de.greyworks.neikergn.modules.TerminModule;
 import android.content.Context;
+import android.widget.Toast;
 
 public class Statics {
+	public static int VERSION = 14070501;
+	public static String VERSION_STRING = "140705 - 1.0b";
 	public static String TAG = "Neikergn";
 	public static Context ctx;
 	public static OverviewActivity ovr;
@@ -26,6 +29,11 @@ public class Statics {
 	public static MessageModule messageModule;
 	public static TerminModule terminModule;
 	public static NiBModule nibModule;
+	
+	
+	public static void showToast(String text) {
+		Toast.makeText(ctx, text, Toast.LENGTH_SHORT).show();
+	}
 	
 
 
