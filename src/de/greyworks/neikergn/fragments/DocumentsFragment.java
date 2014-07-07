@@ -89,8 +89,6 @@ public class DocumentsFragment extends Fragment {
 								Toast.LENGTH_LONG).show();
 					}
 				} else {
-					Toast.makeText(Statics.ctx, "Downloade Dokument",
-							Toast.LENGTH_SHORT).show();
 					item.download();
 				}
 

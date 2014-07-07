@@ -31,7 +31,7 @@ public class DocumentItem implements Comparable<DocumentItem> {
 			return "Invalid.";
 		}
 	}
-	
+
 	public String getFileName() {
 		String[] splits = this.url.split("/");
 		return splits[splits.length - 1];
@@ -55,11 +55,16 @@ public class DocumentItem implements Comparable<DocumentItem> {
 			request.setDescription("Neikergn App Download");
 			request.setTitle(getTitle());
 			request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
-			request.setDestinationInExternalFilesDir(Statics.ctx, null,
-					getFileName());
-			DownloadManager manager = (DownloadManager) Statics.ctx
-					.getSystemService(Context.DOWNLOAD_SERVICE);
-			manager.enqueue(request);
+			try {
+				request.setDestinationInExternalFilesDir(Statics.ctx, null,
+						getFileName());
+				DownloadManager manager = (DownloadManager) Statics.ctx
+						.getSystemService(Context.DOWNLOAD_SERVICE);
+				manager.enqueue(request);
+				Statics.showToast("Downloade Dokument");
+			} catch (IllegalStateException e) {
+				Statics.showToast("Fehler beim Download: Externer Speicher nicht beschreibbar");
+			}
 		}
 	}
 

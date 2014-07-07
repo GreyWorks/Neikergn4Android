@@ -24,7 +24,6 @@ public class MitteilungsblattItem implements Comparable<MitteilungsblattItem> {
 	private int size;
 	private boolean valid = false;
 
-
 	public MitteilungsblattItem() {
 
 	}
@@ -32,7 +31,7 @@ public class MitteilungsblattItem implements Comparable<MitteilungsblattItem> {
 	public boolean isValid() {
 		return this.valid;
 	}
-	
+
 	public int getId() {
 		return this.id;
 	}
@@ -64,7 +63,7 @@ public class MitteilungsblattItem implements Comparable<MitteilungsblattItem> {
 	public boolean isDownloaded() {
 		return getLocalFile().exists();
 	}
-	
+
 	public String getSizeString() {
 		return this.size + " KiB";
 	}
@@ -80,15 +79,20 @@ public class MitteilungsblattItem implements Comparable<MitteilungsblattItem> {
 			request.setDescription("Neikergn App Download");
 			request.setTitle("Mitteilungsblatt" + getFileName());
 			request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
-			request.setDestinationInExternalFilesDir(Statics.ctx, null,
-					"mitteilungsblatt/" + getFileName());
-			DownloadManager manager = (DownloadManager) Statics.ctx
-					.getSystemService(Context.DOWNLOAD_SERVICE);
-			manager.enqueue(request);
+			try {
+				request.setDestinationInExternalFilesDir(Statics.ctx, null,
+						"mitteilungsblatt/" + getFileName());
+				DownloadManager manager = (DownloadManager) Statics.ctx
+						.getSystemService(Context.DOWNLOAD_SERVICE);
+				manager.enqueue(request);
+				Statics.showToast("Downloade Mitteilungsblatt");
+
+			} catch (IllegalStateException e) {
+				Statics.showToast("Fehler beim Download: Externer Speicher nicht beschreibbar");
+			}
+
 		}
 	}
-	
-
 
 	public JSONObject toJSON() {
 		JSONObject json = new JSONObject();
@@ -120,13 +124,14 @@ public class MitteilungsblattItem implements Comparable<MitteilungsblattItem> {
 		}
 		return item;
 	}
-	
+
 	public static MitteilungsblattItem fromWeb(JSONObject json) {
 		MitteilungsblattItem item = new MitteilungsblattItem();
 		try {
 			item.id = json.getInt("i");
 			item.title = json.getString("t");
-			item.date = Statics.dateFormatInShort.parse(json.getString("d").substring(0, 8));
+			item.date = Statics.dateFormatInShort.parse(json.getString("d")
+					.substring(0, 8));
 			item.fileName = json.getString("d");
 			item.size = json.getInt("s");
 			item.valid = true;
@@ -149,13 +154,13 @@ public class MitteilungsblattItem implements Comparable<MitteilungsblattItem> {
 			Matcher mDate = Pattern.compile("(\\d\\d.\\d\\d.\\d\\d\\d\\d)")
 					.matcher(m.group(1));
 			if (mDate.find()) {
-//				this.date = mDate.group(1);
+				// this.date = mDate.group(1);
 			}
 			if (m.find()) {
 				Matcher mUrl = Pattern.compile("href=\"(.*?)\"").matcher(
 						m.group(1));
 				if (mUrl.find()) {
-//					this.url = mUrl.group(1);
+					// this.url = mUrl.group(1);
 				}
 				if (m.find()) {
 					this.title = m.group(1);
@@ -163,11 +168,11 @@ public class MitteilungsblattItem implements Comparable<MitteilungsblattItem> {
 						Matcher mPages = Pattern.compile("(\\d+)").matcher(
 								m.group(1));
 						if (mPages.find()) {
-//							this.pages = Integer.parseInt(mPages.group(1));
-//							if (this.pages != 0 && !this.title.isEmpty()
-//									&& !this.url.isEmpty()) {
-//								this.valid = true;
-//							}
+							// this.pages = Integer.parseInt(mPages.group(1));
+							// if (this.pages != 0 && !this.title.isEmpty()
+							// && !this.url.isEmpty()) {
+							// this.valid = true;
+							// }
 						}
 					}
 				}

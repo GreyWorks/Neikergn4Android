@@ -49,8 +49,8 @@ public class NewsContentFragment extends Fragment implements Observer {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_web,
-				container, false);
+		View rootView = inflater.inflate(R.layout.fragment_web, container,
+				false);
 		Bundle args = this.getArguments();
 		this.id = args.getInt("id");
 		item = Statics.newsModule.getById(id);
@@ -66,7 +66,6 @@ public class NewsContentFragment extends Fragment implements Observer {
 		// initialize http module;
 		http.addObserver(this);
 		http.httpGet(baseUrl + id);
-		
 
 		return rootView;
 	}
@@ -85,13 +84,15 @@ public class NewsContentFragment extends Fragment implements Observer {
 		// Show toast on error
 		http.getStatus();
 		String text = http.getContent().replaceAll("(\r\n|\n)", "<br />");
-		text = text.replaceAll("images/presse",
-				"http://www.neunkirchen-am-brand.de/images/presse");
+		text = text
+				.replaceAll(
+						"<img src=\"images/presse",
+						"<img style=\"max-width:100%\" src=\"http://www.neunkirchen-am-brand.de/images/presse");
 		content = "<table><tr><td colspan=\"2\"><b>" + item.getTitle()
-				+ "</b></td></tr><tr><td>" + item.getSourceLong() + "<br />&nbsp;</td><td>"
-				+ item.getDate() + "<br />&nbsp;</td></tr><tr><td colspan=\"2\">"
-				+ text + "</td></tr></table>";
-
+				+ "</b></td></tr><tr><td>" + item.getSourceLong()
+				+ "<br />&nbsp;</td><td>" + item.getDate()
+				+ "<br />&nbsp;</td></tr><tr><td colspan=\"2\">" + text
+				+ "</td></tr></table>";
 
 		web.loadDataWithBaseURL("", content, "text/html", "UTF-8", "");
 		pDiag.cancel();

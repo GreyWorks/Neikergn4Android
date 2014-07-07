@@ -104,8 +104,6 @@ public class MitteilungsblattFragment extends Fragment implements Observer {
 								Toast.LENGTH_LONG).show();
 					}
 				} else {
-					Toast.makeText(Statics.ctx, "Downloade Mitteilungsblatt",
-							Toast.LENGTH_SHORT).show();
 					item.download();
 				}
 
