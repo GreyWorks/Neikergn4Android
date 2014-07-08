@@ -15,11 +15,11 @@ import android.widget.TextView;
 import de.greyworks.neikergn.R;
 import de.greyworks.neikergn.containers.MessageItem;
 
-public class MessageItemAdapter extends BaseAdapter implements SpinnerAdapter{
+public class MessageItemAdapter extends BaseAdapter implements SpinnerAdapter {
 	ArrayList<MessageItem> messageItems;
 	Context ctx;
 	LayoutInflater inflater;
-	
+
 	public MessageItemAdapter(ArrayList<MessageItem> messageItems, Context ctx) {
 		super();
 		this.messageItems = messageItems;
@@ -27,8 +27,6 @@ public class MessageItemAdapter extends BaseAdapter implements SpinnerAdapter{
 		inflater = (LayoutInflater) ctx
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
-
-
 
 	@Override
 	public int getCount() {
@@ -49,30 +47,32 @@ public class MessageItemAdapter extends BaseAdapter implements SpinnerAdapter{
 	public View getView(int position, View convertView, ViewGroup parent) {
 		MessageItem curItem = messageItems.get(position);
 		View spinView;
-		
-		spinView = inflater.inflate(R.layout.list_item_news, parent, false);
+
+		spinView = inflater.inflate(R.layout.list_item_twoline, parent, false);
 		int age = curItem.getAge();
 		int bgCol;
 		Resources res = parent.getResources();
-		if(age < 0)
-			bgCol = res.getColor(R.color.blue_2);
-		else if(age < 1)
-			bgCol = res.getColor(R.color.blue_0);
-		else if(age < 2)
-			bgCol = res.getColor(R.color.blue_1);
-		else if(age < 8)
-			bgCol = res.getColor(R.color.blue_2);
+		if (age < 0)
+			bgCol = res.getColor(R.color.lblue_50);
+		else if (age < 1)
+			bgCol = res.getColor(R.color.lblue_300);
+		else if (age < 2)
+			bgCol = res.getColor(R.color.lblue_200);
+		else if (age < 8)
+			bgCol = res.getColor(R.color.lblue_100);
 		else
-			bgCol = Color.WHITE;
-		spinView.setBackgroundColor(bgCol);
-		
-		TextView txTitle = (TextView) spinView.findViewById(R.id.label_nav);
+			bgCol = res.getColor(R.color.lblue_50);
+		spinView.findViewById(R.id.v_spacer).setBackgroundColor(bgCol);
+		spinView.findViewById(R.id.label_title).setBackgroundColor(bgCol);
+
+		TextView txTitle = (TextView) spinView.findViewById(R.id.label_title);
 		txTitle.setText(Html.fromHtml(curItem.getTitle()));
-		
-		TextView txInfo = (TextView) spinView.findViewById(R.id.date_source);
-		txInfo.setText(curItem.getDate() + "\n" + Html.fromHtml(curItem.getPreview()));
-		
+
+		TextView txInfo = (TextView) spinView.findViewById(R.id.label_info);
+		txInfo.setText(curItem.getDate() + "\n"
+				+ Html.fromHtml(curItem.getPreview()));
+
 		return spinView;
 	}
-	
+
 }

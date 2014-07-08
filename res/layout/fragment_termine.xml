@@ -16,7 +16,7 @@
         android:orientation="vertical" >
 
         <ListView
-            android:id="@+id/trmList"
+            android:id="@+id/list_lst"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
         </ListView>

@@ -17,10 +17,10 @@ public class NavItemAdapter extends BaseAdapter implements SpinnerAdapter {
 	String[] entityText;
 	public int selection = -1;
 	public static int[] entityColor = new int[] {
-			Statics.ctx.getResources().getColor(R.color.green_0),
-			Statics.ctx.getResources().getColor(R.color.blue_0),
-			Statics.ctx.getResources().getColor(R.color.violett_0),
-			Statics.ctx.getResources().getColor(R.color.orange_0),
+			Statics.ctx.getResources().getColor(R.color.lgreen_300),
+			Statics.ctx.getResources().getColor(R.color.lblue_300),
+			Statics.ctx.getResources().getColor(R.color.pink_300),
+			Statics.ctx.getResources().getColor(R.color.orange_300),
 			Color.LTGRAY,
 			Color.LTGRAY,
 			Color.GRAY
@@ -49,7 +49,7 @@ public class NavItemAdapter extends BaseAdapter implements SpinnerAdapter {
 		spinView = inflater.inflate(R.layout.list_item_nav_drawer, parent,
 				false);
 
-		TextView txTitle = (TextView) spinView.findViewById(R.id.label_nav);
+		TextView txTitle = (TextView) spinView.findViewById(R.id.label_title);
 
 		if (position == selection) {
 			spinView.setBackgroundColor(entityColor[position]);

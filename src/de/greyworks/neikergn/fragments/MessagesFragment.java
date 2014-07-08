@@ -47,9 +47,9 @@ public class MessagesFragment extends Fragment implements Observer {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_messages, container,
+		View rootView = inflater.inflate(R.layout.fragment_list, container,
 				false);
-		lstMessages = (ListView) rootView.findViewById(R.id.listMessages);
+		lstMessages = (ListView) rootView.findViewById(R.id.list_lst);
 
 		messageModule = Statics.messageModule;
 

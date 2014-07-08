@@ -42,7 +42,7 @@ public class NewsFragment extends Fragment implements Observer {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_list, container,
 				false);
-		lstNews = (ListView) rootView.findViewById(R.id.trmList);
+		lstNews = (ListView) rootView.findViewById(R.id.list_lst);
 
 		newsModule = Statics.newsModule;
 

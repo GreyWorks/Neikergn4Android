@@ -49,17 +49,25 @@ public class MitteilungsblattItemAdapter extends BaseAdapter implements
 		MitteilungsblattItem curItem = mitteilungsblattItems.get(position);
 		View spinView;
 
-		spinView = inflater.inflate(R.layout.list_item_news, parent, false);
+		spinView = inflater.inflate(R.layout.list_item_twoline, parent, false);
 
-		TextView txDatePages = (TextView) spinView.findViewById(R.id.label_nav);
+		TextView txDatePages = (TextView) spinView
+				.findViewById(R.id.label_title);
 		txDatePages.setText(curItem.getDate());
 
-		TextView txTitle = (TextView) spinView.findViewById(R.id.date_source);
-		txTitle.setText(Html.fromHtml(curItem.getTitle())+ "\n" + curItem.getSizeString());
+		TextView txTitle = (TextView) spinView.findViewById(R.id.label_info);
+		txTitle.setText(Html.fromHtml(curItem.getTitle()) + "\n"
+				+ curItem.getSizeString());
 
-		if (!curItem.isDownloaded()) {
-			spinView.setBackgroundColor(Color.LTGRAY);
+		int bgCol;
+		if (curItem.isDownloaded()) {
+			bgCol = parent.getResources().getColor(R.color.lgreen_50);
+		} else {
+			bgCol = Color.LTGRAY;
 		}
+
+		spinView.findViewById(R.id.v_spacer).setBackgroundColor(bgCol);
+		spinView.findViewById(R.id.label_title).setBackgroundColor(bgCol);
 
 		return spinView;
 	}

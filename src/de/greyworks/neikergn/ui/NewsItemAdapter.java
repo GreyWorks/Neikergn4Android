@@ -49,35 +49,35 @@ public class NewsItemAdapter extends BaseAdapter implements SpinnerAdapter {
 		NewsItem curItem = newsItems.get(position);
 		View spinView;
 		String info = "";
-		if(views.indexOfKey(curItem.getId()) > 0) {
+		if (views.indexOfKey(curItem.getId()) > 0) {
 			return views.get(curItem.getId());
 		}
 
-		spinView = inflater.inflate(R.layout.list_item_news, parent, false);
+		spinView = inflater.inflate(R.layout.list_item_twoline, parent, false);
 		int age = curItem.getAge();
+		int bgCol;
+
 		if (age < 1) {
-			spinView.setBackgroundColor(parent.getResources().getColor(
-					R.color.green_0));
+			bgCol = parent.getResources().getColor(R.color.lgreen_300);
 		} else if (age < 2) {
-			spinView.setBackgroundColor(parent.getResources().getColor(
-					R.color.green_1));
+			bgCol = parent.getResources().getColor(R.color.lgreen_200);
 			info = " - 1 Tag alt";
 		} else if (age < 8) {
-			spinView.setBackgroundColor(parent.getResources().getColor(
-					R.color.green_2));
+			bgCol = parent.getResources().getColor(R.color.lgreen_100);
 			info = " - " + curItem.getAge() + " Tage alt";
 		} else {
-			spinView.setBackgroundColor(Color.WHITE);
+			bgCol = parent.getResources().getColor(R.color.lgreen_50);
 			info = " - " + curItem.getAge() + " Tage alt";
 		}
+		spinView.findViewById(R.id.v_spacer).setBackgroundColor(bgCol);
+		spinView.findViewById(R.id.label_title).setBackgroundColor(bgCol);
 
-		TextView txTitle = (TextView) spinView.findViewById(R.id.label_nav);
+		TextView txTitle = (TextView) spinView.findViewById(R.id.label_title);
 		txTitle.setText(Html.fromHtml(curItem.getTitle()));
 
-		TextView txInfo = (TextView) spinView.findViewById(R.id.date_source);
-		txInfo.setText(curItem.getDate() + " - " + curItem.getSource()
-				+ info);
-		
+		TextView txInfo = (TextView) spinView.findViewById(R.id.label_info);
+		txInfo.setText(curItem.getDate() + " - " + curItem.getSource() + info);
+
 		views.put(curItem.getId(), spinView);
 
 		return spinView;

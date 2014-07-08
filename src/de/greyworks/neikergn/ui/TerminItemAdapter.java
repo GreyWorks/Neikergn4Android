@@ -14,12 +14,12 @@ import android.widget.TextView;
 import de.greyworks.neikergn.R;
 import de.greyworks.neikergn.containers.TerminItem;
 
-public class TerminItemAdapter extends BaseAdapter implements SpinnerAdapter{
+public class TerminItemAdapter extends BaseAdapter implements SpinnerAdapter {
 	ArrayList<TerminItem> terminItems;
 	Context ctx;
 	LayoutInflater inflater;
 	SparseArray<View> views = new SparseArray<View>();
-	
+
 	public TerminItemAdapter(ArrayList<TerminItem> terminItems, Context ctx) {
 		super();
 		this.terminItems = terminItems;
@@ -27,8 +27,6 @@ public class TerminItemAdapter extends BaseAdapter implements SpinnerAdapter{
 		inflater = (LayoutInflater) ctx
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
-
-
 
 	@Override
 	public int getCount() {
@@ -49,31 +47,35 @@ public class TerminItemAdapter extends BaseAdapter implements SpinnerAdapter{
 	public View getView(int position, View convertView, ViewGroup parent) {
 		TerminItem curItem = terminItems.get(position);
 		View spinView;
-		
-		if(views.indexOfKey(curItem.getId()) > 0) {
+
+		if (views.indexOfKey(curItem.getId()) > 0) {
 			return views.get(curItem.getId());
 		}
-		spinView = inflater.inflate(R.layout.list_item_termin, parent, false);
+		spinView = inflater.inflate(R.layout.list_item_twoline, parent, false);
 		float age = curItem.getAge();
-		if(age > 0)
-			spinView.setBackgroundColor(Color.WHITE);
-		else if(age > -1)
-			spinView.setBackgroundColor(parent.getResources().getColor(R.color.orange_0));
-		else if(age > -2)
-			spinView.setBackgroundColor(parent.getResources().getColor(R.color.orange_1));
-		else if(age > -8)
-			spinView.setBackgroundColor(parent.getResources().getColor(R.color.orange_2));
+		int bgCol;
+		if (age > 0)
+			bgCol = parent.getResources().getColor(R.color.orange_50);
+		else if (age > -1)
+			bgCol = parent.getResources().getColor(R.color.orange_300);
+		else if (age > -2)
+			bgCol = parent.getResources().getColor(R.color.orange_200);
+		else if (age > -8)
+			bgCol = parent.getResources().getColor(R.color.orange_100);
 		else
-			spinView.setBackgroundColor(Color.WHITE);
-		
-		TextView txTitle = (TextView) spinView.findViewById(R.id.trm_title);
+			bgCol = parent.getResources().getColor(R.color.orange_50);
+
+		spinView.findViewById(R.id.v_spacer).setBackgroundColor(bgCol);
+		spinView.findViewById(R.id.label_title).setBackgroundColor(bgCol);
+
+		TextView txTitle = (TextView) spinView.findViewById(R.id.label_title);
 		txTitle.setText(curItem.getTitle());
-		
-		txTitle = (TextView) spinView.findViewById(R.id.trm_date);
+
+		txTitle = (TextView) spinView.findViewById(R.id.label_info);
 		txTitle.setText(curItem.getInfo());
 		views.put(curItem.getId(), spinView);
-		
+
 		return spinView;
 	}
-	
+
 }

@@ -38,9 +38,9 @@ public class TerminFragment extends Fragment implements Observer {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_termine, container,
+		View rootView = inflater.inflate(R.layout.fragment_list, container,
 				false);
-		lstTermine = (ListView) rootView.findViewById(R.id.trmList);
+		lstTermine = (ListView) rootView.findViewById(R.id.list_lst);
 
 		terminModule = Statics.terminModule;
 		adapter = new TerminItemAdapter(terminModule.getItems(), lstTermine

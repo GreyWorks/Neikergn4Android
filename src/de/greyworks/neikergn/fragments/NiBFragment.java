@@ -39,7 +39,7 @@ public class NiBFragment extends Fragment implements Observer {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_list, container,
 				false);
-		lstNib = (ListView) rootView.findViewById(R.id.trmList);
+		lstNib = (ListView) rootView.findViewById(R.id.list_lst);
 
 		nibModule = Statics.nibModule;
 
