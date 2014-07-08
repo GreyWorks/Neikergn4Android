@@ -17,11 +17,11 @@ public class NewsItem implements Comparable<NewsItem> {
 	private String preview = "";
 	private int source = 0;
 	private Date date = null;
-	
-	private static String[] srcShort = { "EN", "FT", "NN", "EN / NN" };
+
+	private static String[] srcShort = { "EN", "FT", "NN", "EN / NN", "NO"};
 	private static String[] srcLong = { "Erlanger Nachrichten",
 			"Fränkischer Tag", "Nürnberger Nachrichten",
-			"Erlanger Nachrichten / Nürnberger Nachrichten" };
+			"Erlanger Nachrichten / Nürnberger Nachrichten", "neikergn online" };
 
 	private boolean valid = false;
 
@@ -46,20 +46,28 @@ public class NewsItem implements Comparable<NewsItem> {
 	}
 
 	public String getSource() {
-		return srcShort[this.source];
+		if (this.source < srcShort.length) {
+			return srcShort[this.source];
+		} else {
+			return "N/A";
+		}
 	}
-	
+
 	public String getSourceLong() {
-		return srcLong[this.source];
+		if (this.source < srcShort.length) {
+			return srcLong[this.source];
+		} else {
+			return "Unbekannte Quelle";
+		}
 	}
 
 	public String getDate() {
 		return Statics.dateFormatOut.format(this.date);
 	}
-	
+
 	public int getAge() {
 		long diff = new Date().getTime() - this.date.getTime();
-		return (int)(diff / 1000 / 60 / 60 / 24);
+		return (int) (diff / 1000 / 60 / 60 / 24);
 	}
 
 	public JSONObject toJSON() {
@@ -93,7 +101,7 @@ public class NewsItem implements Comparable<NewsItem> {
 		}
 		return item;
 	}
-	
+
 	public static NewsItem fromWeb(JSONObject obj) {
 		NewsItem item = new NewsItem();
 		try {
@@ -119,9 +127,9 @@ public class NewsItem implements Comparable<NewsItem> {
 		Pattern p = Pattern.compile("<td.*?>(.*?)</td>");
 		Matcher m = p.matcher(html);
 		if (m.find()) {
-			//this.date = m.group(1);
+			// this.date = m.group(1);
 			if (m.find()) {
-				//this.source = m.group(1);
+				// this.source = m.group(1);
 				if (m.find()) {
 					this.title = m.group(1);
 					if (m.find()) {
