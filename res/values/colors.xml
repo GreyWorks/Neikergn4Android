@@ -30,5 +30,12 @@
 
     <drawable name="list_normal">#f444</drawable>
     <drawable name="list_selected">#f666</drawable>
+    <drawable name="d_dorange_900">#bf360c</drawable>
+    <drawable name="d_pink_900">#880e4f</drawable>
+    <drawable name="d_lblue_900">#01579b</drawable>
+    <drawable name="d_lgreen_900">#33691e</drawable>
+    <drawable name="d_grey_800">#424242</drawable>
+    <drawable name="d_grey_900">#212121</drawable>
+    
 
 </resources>

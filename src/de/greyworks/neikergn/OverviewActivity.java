@@ -3,6 +3,7 @@ package de.greyworks.neikergn;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -71,43 +72,66 @@ public class OverviewActivity extends Activity implements
 			fragmentManager.popBackStack(fragmentManager.getBackStackEntryAt(0)
 					.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
 		}
-		if (position == 0) {
+
+		Drawable bg = getResources().getDrawable(R.drawable.d_lgreen_900);
+		switch (position) {
+
+		case 0:
 			// switch to news
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, NewsFragment.newInstance())
 					.commit();
-		} else if (position == 1) {
+			bg = getResources().getDrawable(R.drawable.d_lgreen_900);
+			break;
+
+		case 1:
 			// switch to messages
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, MessagesFragment.newInstance())
 					.commit();
-		} else if (position == 2) {
+			bg = getResources().getDrawable(R.drawable.d_lblue_900);
+			break;
+		case 2:
 			// switch to NIB
 			fragmentManager.beginTransaction()
-			.replace(R.id.container, NiBFragment.newInstance())
-			.commit();
-		} else if (position == 3) {
+					.replace(R.id.container, NiBFragment.newInstance())
+					.commit();
+			bg = getResources().getDrawable(R.drawable.d_pink_900);
+			break;
+		case 3:
 			// switch to appointments
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, TerminFragment.newInstance())
 					.commit();
-		} else if (position == 4) {
+			bg = getResources().getDrawable(R.drawable.d_dorange_900);
+			break;
+		case 4:
 			// switch to mitteilungsblatt
 			fragmentManager
 					.beginTransaction()
 					.replace(R.id.container,
 							MitteilungsblattFragment.newInstance()).commit();
-		} else if (position == 5) {
+			bg = getResources().getDrawable(R.drawable.d_grey_800);
+			break;
+		case 5:
 			// siwtch to documents
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, DocumentsFragment.newInstance())
 					.commit();
-		} else if (position == 6) {
+			bg = getResources().getDrawable(R.drawable.d_grey_800);
+			break;
+		case 6:
 			// switch to about
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, AboutFragment.newInstance())
 					.commit();
+			bg = getResources().getDrawable(R.drawable.d_grey_900);
+			break;
+		default:
+			// what the... well, yeah, you should not be here.
 		}
+		getActionBar().setBackgroundDrawable(bg);
+
 	}
 
 	/**
@@ -153,17 +177,17 @@ public class OverviewActivity extends Activity implements
 		// int id = item.getItemId();
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	public void setProgressBar(int i) {
-		if(i == 0) {
+		if (i == 0) {
 			progressCount = 0;
 		} else {
 			progressCount += i;
-			if(progressCount < 0)
+			if (progressCount < 0)
 				progressCount = 0;
 		}
 		mProgress.setIndeterminate(progressCount > 0);
-		
+
 	}
 
 }
