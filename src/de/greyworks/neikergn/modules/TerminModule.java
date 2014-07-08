@@ -86,10 +86,11 @@ public class TerminModule extends Observable implements
 	@Override
 	public void cleanUp() {
 		// no iterator to prevent concurrency problems
-		// caused by... whatever... when setting item to iterator.next()
-		// #whatever #planb
-		for (int i = 0; i < terminItems.size(); i++) {
-			if (terminItems.get(i).getAge() > 7) {
+		// caused by removing iterating item
+		int myAge;
+		for (int i = terminItems.size() - 1; i > -1; i--) {
+			myAge = terminItems.get(i).getAge();
+			if (myAge > 7 || myAge < -31) {
 				terminItems.remove(i);
 			}
 		}

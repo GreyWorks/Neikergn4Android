@@ -113,17 +113,14 @@ public class NewsModule extends Observable implements ContentModule<NewsItem>,
 
 	@Override
 	public void cleanUp() {
-		// No iterator here
-		// Causes ConcurrentModificationException
-		// #fts #planb
-		// FIXED #4 Startup Crash
-		for (int i = 0; i < newsItems.size(); i++) {
-			NewsItem item = newsItems.get(i);
-			if (item.getAge() > 14) {
-				newsItems.remove(item);
+		Collections.sort(newsItems);
+		int myAge;
+		for (int i = newsItems.size() - 1; i > -1; i--) {
+			myAge = newsItems.get(i).getAge();
+			if (myAge > 14) {
+				newsItems.remove(i);
 			}
 		}
-		Collections.sort(newsItems);
 	}
 
 	/**

@@ -74,14 +74,14 @@ public class MessageModule extends Observable implements
 
 	@Override
 	public void cleanUp() {
-		for (Iterator<MessageItem> iterator = messageItems.iterator(); iterator
-				.hasNext();) {
-			MessageItem item = (MessageItem) iterator.next();
-			if (item.getAge() > 30) {
-				messageItems.remove(item);
+		Collections.sort(messageItems);
+		int myAge;
+		for(int i = messageItems.size() - 1; i > -1; i--) {
+			myAge = messageItems.get(i).getAge();
+			if(myAge > 30) {
+				messageItems.remove(i);
 			}
 		}
-		Collections.sort(messageItems);
 	}
 
 	private void saveToFile() {

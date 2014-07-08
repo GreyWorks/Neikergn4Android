@@ -73,12 +73,14 @@ public class NiBModule extends Observable implements ContentModule<NiBItem>,
 
 	@Override
 	public void cleanUp() {
-		/*
-		 * for (Iterator<NiBItem> iterator = nibItems.iterator();
-		 * iterator.hasNext();) { NiBItem item = (NiBItem) iterator.next(); if
-		 * (item.getAge() > 90) { nibItems.remove(item); } }
-		 */
 		Collections.sort(nibItems);
+		int myAge;
+		for(int i = nibItems.size() - 1; i > -1; i--) {
+			myAge = nibItems.get(i).getAge();
+			if(myAge > 90) {
+				nibItems.remove(i);
+			}
+		}
 	}
 
 	private void saveToFile() {

@@ -16,7 +16,7 @@ public class TerminItem implements Comparable<TerminItem> {
 	private Date start = null;
 	private Date end = null;
 	private boolean more = false;
-	
+
 	private String infoCache = "";
 
 	private boolean valid = false;
@@ -40,7 +40,7 @@ public class TerminItem implements Comparable<TerminItem> {
 			return "Invalid.";
 		}
 	}
-	
+
 	public String getOrt() {
 		return this.ort;
 	}
@@ -48,31 +48,47 @@ public class TerminItem implements Comparable<TerminItem> {
 	public String getDate() {
 		return Statics.dateFormatOutFull.format(this.start);
 	}
-	
+
 	public String getEnd() {
 		return Statics.dateFormatOutFull.format(this.end);
 	}
-	
+
 	public String getDateInfo() {
-		if(this.end.getTime() - this.start.getTime() < 5) {
+		if (this.end.getTime() - this.start.getTime() < 5) {
 			return "Am " + this.getDate();
 		} else {
-			return "Von " + this.getDate() + " bis " + this.getEnd(); 
-		}		
+			return "Von " + this.getDate() + " bis " + this.getEnd();
+		}
 	}
-	
+
 	public String getInfo() {
-		if(infoCache.isEmpty()) {
-			infoCache = getDateInfo() + "\n" + getOrt();
+		if (infoCache.isEmpty()) {
+			StringBuilder info = new StringBuilder();
+			info.append(getDateInfo());
+			if (getAge() > 0) {
+				info.append("\n" + ((getAge()<2)?"Gestern":("Vor " + getAge() + " Tagen")) + "\n");
+			} else if (getAge() > -1) {
+				info.append("\nHeute\n");
+			} else if (getAge() > -2) {
+				info.append("\nMorgen\n");
+			} else if (getAge() > -8) {
+				info.append("\nIn " + (-getAge()) + " Tagen\n");
+			} else {
+				info.append("\nIn " + (-getAge()) + " Tagen\n");
+			}
+			info.append(getOrt());
+			infoCache = info.toString();
 		}
 		return infoCache;
 	}
-	
-	public float getAge() {
-		float diff = (float)(new Date().getTime() - this.start.getTime()) / 1000 / 60 / 60 / 24;
+
+	public int getAge() {
+		float devider = 1000 * 60 * 60 * 24;
+		int diff = (int) (new Date().getTime() / devider)
+				- (int) (this.start.getTime() / devider);
 		return diff;
 	}
-	
+
 	public JSONObject toJSON() {
 		JSONObject json = new JSONObject();
 		try {
@@ -107,15 +123,17 @@ public class TerminItem implements Comparable<TerminItem> {
 		}
 		return item;
 	}
-	
+
 	public static TerminItem fromWeb(JSONObject obj) {
 		TerminItem item = new TerminItem();
 		try {
 			item.id = obj.getInt("i");
 			item.title = obj.getString("t");
 			item.ort = obj.getString("o");
-			item.start = Statics.dateFormatInFull.parse(obj.getString("d") + " " + obj.getString("b"));
-			item.end = Statics.dateFormatInFull.parse(obj.getString("d") + " " + obj.getString("e"));
+			item.start = Statics.dateFormatInFull.parse(obj.getString("d")
+					+ " " + obj.getString("b"));
+			item.end = Statics.dateFormatInFull.parse(obj.getString("d") + " "
+					+ obj.getString("e"));
 			item.more = obj.getString("m").equals("Y");
 			item.valid = true;
 		} catch (JSONException e) {
@@ -142,7 +160,7 @@ public class TerminItem implements Comparable<TerminItem> {
 	@Override
 	public int compareTo(TerminItem another) {
 		Long diff = another.start.getTime() - this.start.getTime();
-		if(diff<0) {
+		if (diff < 0) {
 			return -1;
 		} else if (diff == 0) {
 			return 0;
