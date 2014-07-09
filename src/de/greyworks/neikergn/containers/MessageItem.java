@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import de.greyworks.neikergn.Statics;
 import android.util.Log;
 
-public class MessageItem implements Comparable<MessageItem>{
+public class MessageItem implements Comparable<MessageItem> {
 	private int id;
 	private String title = "";
 	private String picture = "";
@@ -39,7 +39,7 @@ public class MessageItem implements Comparable<MessageItem>{
 			return "Invalid.";
 		}
 	}
-	
+
 	public String getPreview() {
 		return this.preview;
 	}
@@ -51,10 +51,10 @@ public class MessageItem implements Comparable<MessageItem>{
 	public String getDate() {
 		return Statics.dateFormatOut.format(this.date);
 	}
-	
+
 	public int getAge() {
 		long diff = new Date().getTime() - this.date.getTime();
-		return (int)(diff / 1000 / 60 / 60 / 24);
+		return (int) (diff / 1000 / 60 / 60 / 24);
 	}
 
 	public JSONObject toJSON() {
@@ -66,7 +66,8 @@ public class MessageItem implements Comparable<MessageItem>{
 			json.put("l", this.picture);
 			json.put("d", this.date.getTime());
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "NewsItem to JSON Fail");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "NewsItem to JSON Fail");
 			e.printStackTrace();
 		}
 		return json;
@@ -83,12 +84,13 @@ public class MessageItem implements Comparable<MessageItem>{
 			item.date = new Date(d);
 			item.valid = true;
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "NewsItem from JSON Fail");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "NewsItem from JSON Fail");
 			e.printStackTrace();
 		}
 		return item;
 	}
-	
+
 	public static MessageItem fromWeb(JSONObject obj) {
 		MessageItem item = new MessageItem();
 		try {
@@ -100,10 +102,12 @@ public class MessageItem implements Comparable<MessageItem>{
 			item.date = Statics.dateFormatIn.parse(d);
 			item.valid = true;
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "MessageItem from web date parsing fail");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "MessageItem from web date parsing fail");
 			e.printStackTrace();
-		}  catch (ParseException e) {
-			Log.e(Statics.TAG, "MessageItem from web date parsing fail");
+		} catch (ParseException e) {
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "MessageItem from web date parsing fail");
 			e.printStackTrace();
 		}
 		return item;
@@ -116,27 +120,26 @@ public class MessageItem implements Comparable<MessageItem>{
 		Matcher m = p.matcher(html);
 		if (m.find()) {
 			Matcher mPic = Pattern.compile("src=\"(.*?)\"").matcher(m.group(1));
-			if(mPic.find()) {
+			if (mPic.find()) {
 				this.picture = mPic.group(1);
 			}
 			if (m.find()) {
-				Matcher mHead = Pattern.compile("(\\d\\d.\\d\\d.\\d\\d\\d\\d) - (.*?)</b>").matcher(m.group(1));
-				if(mHead.find()) {
-//					this.date = mHead.group(1);
+				Matcher mHead = Pattern.compile(
+						"(\\d\\d.\\d\\d.\\d\\d\\d\\d) - (.*?)</b>").matcher(
+						m.group(1));
+				if (mHead.find()) {
+					// this.date = mHead.group(1);
 					this.title = mHead.group(2);
 				}
 				String[] splits = m.group(1).split("<br />");
-				if(splits.length > 1) {
+				if (splits.length > 1) {
 					this.preview = splits[1];
 				}
-				
-				Log.d(Statics.TAG, String.valueOf(splits.length));
-				
 			}
 			this.valid = true;
 		}
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if (o instanceof MessageItem) {
@@ -152,7 +155,5 @@ public class MessageItem implements Comparable<MessageItem>{
 	public int compareTo(MessageItem another) {
 		return (int) (another.date.getTime() - this.date.getTime());
 	}
-
-
 
 }

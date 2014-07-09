@@ -12,12 +12,15 @@ import android.content.Context;
 import android.widget.Toast;
 
 public class Statics {
-	public static int VERSION = 14070501;
-	public static String VERSION_STRING = "140705 - 1.0b";
 	public static String TAG = "Neikergn";
 	public static Context ctx;
 	public static OverviewActivity ovr;
 	public static File extStor;
+	
+	public static final boolean VERBOSE = false;
+	public static final boolean DEBUG = false;
+	public static final boolean WARN = false;
+	public static final boolean ERROR = true;
 	
 	public static SimpleDateFormat dateFormatIn = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
 	public static SimpleDateFormat dateFormatInShort = new SimpleDateFormat("yyyyMMdd", Locale.GERMANY);

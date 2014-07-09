@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import android.util.Log;
 import de.greyworks.neikergn.Statics;
 
-public class NiBItem implements Comparable<NiBItem>{
+public class NiBItem implements Comparable<NiBItem> {
 	private int id;
 	private String title = "";
 	private String picture = "";
@@ -37,7 +37,7 @@ public class NiBItem implements Comparable<NiBItem>{
 			return "Invalid.";
 		}
 	}
-	
+
 	public String getText() {
 		return this.text;
 	}
@@ -49,10 +49,10 @@ public class NiBItem implements Comparable<NiBItem>{
 	public String getDate() {
 		return Statics.dateFormatOut.format(this.date);
 	}
-	
+
 	public int getAge() {
 		long diff = new Date().getTime() - this.date.getTime();
-		return (int)(diff / 1000 / 60 / 60 / 24);
+		return (int) (diff / 1000 / 60 / 60 / 24);
 	}
 
 	public JSONObject toJSON() {
@@ -64,7 +64,8 @@ public class NiBItem implements Comparable<NiBItem>{
 			json.put("f", this.picture);
 			json.put("d", this.date.getTime());
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "NiBItem to JSON Fail");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "NiBItem to JSON Fail");
 			e.printStackTrace();
 		}
 		return json;
@@ -81,12 +82,13 @@ public class NiBItem implements Comparable<NiBItem>{
 			item.date = new Date(d);
 			item.valid = true;
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "NiBItem from JSON Fail");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "NiBItem from JSON Fail");
 			e.printStackTrace();
 		}
 		return item;
 	}
-	
+
 	public static NiBItem fromWeb(JSONObject obj) {
 		NiBItem item = new NiBItem();
 		try {
@@ -98,15 +100,17 @@ public class NiBItem implements Comparable<NiBItem>{
 			item.date = Statics.dateFormatIn.parse(d);
 			item.valid = true;
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "NiBItem from web date parsing fail");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "NiBItem from web date parsing fail");
 			e.printStackTrace();
-		}  catch (ParseException e) {
-			Log.e(Statics.TAG, "NiBItem from web date parsing fail");
+		} catch (ParseException e) {
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "NiBItem from web date parsing fail");
 			e.printStackTrace();
 		}
 		return item;
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if (o instanceof NiBItem) {
@@ -122,7 +126,5 @@ public class NiBItem implements Comparable<NiBItem>{
 	public int compareTo(NiBItem another) {
 		return another.id - this.id;
 	}
-
-
 
 }

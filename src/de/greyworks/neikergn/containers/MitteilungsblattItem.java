@@ -103,7 +103,8 @@ public class MitteilungsblattItem implements Comparable<MitteilungsblattItem> {
 			json.put("f", this.fileName);
 			json.put("s", this.size);
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "MitteilungsblattItem to JSON fail");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "MitteilungsblattItem to JSON fail");
 			e.printStackTrace();
 		}
 		return json;
@@ -119,7 +120,8 @@ public class MitteilungsblattItem implements Comparable<MitteilungsblattItem> {
 			item.size = json.getInt("s");
 			item.valid = true;
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "MitteilungsblattItem from JSON fail");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "MitteilungsblattItem from JSON fail");
 			e.printStackTrace();
 		}
 		return item;
@@ -136,10 +138,12 @@ public class MitteilungsblattItem implements Comparable<MitteilungsblattItem> {
 			item.size = json.getInt("s");
 			item.valid = true;
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "MitteilungsblattItem from web JSON fail");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "MitteilungsblattItem from web JSON fail");
 			e.printStackTrace();
 		} catch (ParseException e) {
-			Log.e(Statics.TAG, "MitteilungsblattItem from web Date fail");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "MitteilungsblattItem from web Date fail");
 			e.printStackTrace();
 		}
 		return item;

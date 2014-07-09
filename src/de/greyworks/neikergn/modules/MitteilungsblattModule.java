@@ -38,9 +38,11 @@ public class MitteilungsblattModule extends Observable implements
 		if (upDiff > 1000 * 60 * 60 * 24) {
 			forceUpdateWeb();
 		} else {
-			Log.d(Statics.TAG,
-					"Mitteilungsblatt update skipped (deltaT < 24h = "
-							+ (upDiff / 24 / 60 / 60 / 1000) + ")");
+			if (Statics.DEBUG) {
+				Log.d(Statics.TAG,
+						"Mitteilungsblatt update skipped (deltaT < 24h = "
+								+ (upDiff / 24 / 60 / 60 / 1000) + ")");
+			}
 		}
 	}
 
@@ -62,7 +64,8 @@ public class MitteilungsblattModule extends Observable implements
 			mObj.put("items", mArr);
 			FileModule.saveFile(Statics.ctx, mObj.toString(), fileName);
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "Save Mitteilungsblatt: JSON Error");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "Save Mitteilungsblatt: JSON Error");
 			e.printStackTrace();
 		}
 	}
@@ -81,7 +84,8 @@ public class MitteilungsblattModule extends Observable implements
 				}
 			}
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "Load Mitteilungsblatt: JSON Error");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "Load Mitteilungsblatt: JSON Error");
 			e.printStackTrace();
 		}
 
@@ -107,7 +111,8 @@ public class MitteilungsblattModule extends Observable implements
 				}
 			}
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "JSON Error in Mitteilungsblatt Module");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "JSON Error in Mitteilungsblatt Module");
 			e.printStackTrace();
 		}
 		this.cleanUp();

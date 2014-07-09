@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,9 +45,16 @@ public class MessageItemAdapter extends BaseAdapter implements SpinnerAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		MessageItem curItem = messageItems.get(position);
-		View spinView;
-
-		spinView = inflater.inflate(R.layout.list_item_twoline, parent, false);
+		ViewHolder holder = new ViewHolder();
+		if(convertView == null){
+			convertView = inflater.inflate(R.layout.list_item_twoline, parent, false);
+			holder.title = (TextView) convertView.findViewById(R.id.label_title);
+			holder.info = (TextView) convertView.findViewById(R.id.label_info);
+			holder.spacer = convertView.findViewById(R.id.v_spacer);
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
+		}
 		int age = curItem.getAge();
 		int bgCol;
 		Resources res = parent.getResources();
@@ -62,17 +68,19 @@ public class MessageItemAdapter extends BaseAdapter implements SpinnerAdapter {
 			bgCol = res.getColor(R.color.lblue_100);
 		else
 			bgCol = res.getColor(R.color.lblue_50);
-		spinView.findViewById(R.id.v_spacer).setBackgroundColor(bgCol);
-		spinView.findViewById(R.id.label_title).setBackgroundColor(bgCol);
-
-		TextView txTitle = (TextView) spinView.findViewById(R.id.label_title);
-		txTitle.setText(Html.fromHtml(curItem.getTitle()));
-
-		TextView txInfo = (TextView) spinView.findViewById(R.id.label_info);
-		txInfo.setText(curItem.getDate() + "\n"
+		holder.spacer.setBackgroundColor(bgCol);
+		holder.title.setBackgroundColor(bgCol);
+		holder.title.setText(Html.fromHtml(curItem.getTitle()));
+		holder.info.setText(curItem.getDate() + "\n"
 				+ Html.fromHtml(curItem.getPreview()));
 
-		return spinView;
+		return convertView;
+	}
+	
+	static class ViewHolder {
+		TextView title;
+		TextView info;
+		View spacer;
 	}
 
 }

@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -41,8 +40,10 @@ public class MessageModule extends Observable implements
 		} else {
 			setChanged();
 			notifyObservers();
-			Log.d(Statics.TAG, "Message update skipped (deltaT < 24h = "
-					+ (upDiff / 24 / 60 / 60 / 1000) + ")");
+			if (Statics.DEBUG) {
+				Log.d(Statics.TAG, "Message update skipped (deltaT < 24h = "
+						+ (upDiff / 24 / 60 / 60 / 1000) + ")");
+			}
 		}
 	}
 
@@ -76,9 +77,9 @@ public class MessageModule extends Observable implements
 	public void cleanUp() {
 		Collections.sort(messageItems);
 		int myAge;
-		for(int i = messageItems.size() - 1; i > -1; i--) {
+		for (int i = messageItems.size() - 1; i > -1; i--) {
 			myAge = messageItems.get(i).getAge();
-			if(myAge > 30) {
+			if (myAge > 30) {
 				messageItems.remove(i);
 			}
 		}
@@ -96,7 +97,8 @@ public class MessageModule extends Observable implements
 			msgObj.put("items", msgArr);
 			FileModule.saveFile(Statics.ctx, msgObj.toString(), fileName);
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "Save Messages: JSON Error");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "Save Messages: JSON Error");
 			e.printStackTrace();
 		}
 	}
@@ -115,7 +117,8 @@ public class MessageModule extends Observable implements
 				}
 			}
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "Load Messages: JSON Error");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "Load Messages: JSON Error");
 			e.printStackTrace();
 		}
 
@@ -146,7 +149,8 @@ public class MessageModule extends Observable implements
 			setChanged();
 			notifyObservers();
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "JSON Error in News Module");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "JSON Error in News Module");
 			e.printStackTrace();
 		}
 	}

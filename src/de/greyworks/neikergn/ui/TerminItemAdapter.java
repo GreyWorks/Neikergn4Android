@@ -3,8 +3,6 @@ package de.greyworks.neikergn.ui;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +16,6 @@ public class TerminItemAdapter extends BaseAdapter implements SpinnerAdapter {
 	ArrayList<TerminItem> terminItems;
 	Context ctx;
 	LayoutInflater inflater;
-	SparseArray<View> views = new SparseArray<View>();
 
 	public TerminItemAdapter(ArrayList<TerminItem> terminItems, Context ctx) {
 		super();
@@ -46,12 +43,18 @@ public class TerminItemAdapter extends BaseAdapter implements SpinnerAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		TerminItem curItem = terminItems.get(position);
-		View spinView;
 
-		if (views.indexOfKey(curItem.getId()) > 0) {
-			return views.get(curItem.getId());
+		ViewHolder holder = new ViewHolder();
+		if (convertView == null) {
+			convertView = inflater.inflate(R.layout.list_item_twoline, parent,
+					false);
+			holder.title = (TextView) convertView.findViewById(R.id.label_title);
+			holder.info = (TextView) convertView.findViewById(R.id.label_info);
+			holder.spacer = (View) convertView.findViewById(R.id.v_spacer);
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
 		}
-		spinView = inflater.inflate(R.layout.list_item_twoline, parent, false);
 		float age = curItem.getAge();
 		int bgCol;
 		if (age > 0)
@@ -65,17 +68,18 @@ public class TerminItemAdapter extends BaseAdapter implements SpinnerAdapter {
 		else
 			bgCol = parent.getResources().getColor(R.color.orange_50);
 
-		spinView.findViewById(R.id.v_spacer).setBackgroundColor(bgCol);
-		spinView.findViewById(R.id.label_title).setBackgroundColor(bgCol);
+		holder.spacer.setBackgroundColor(bgCol);
+		holder.title.setBackgroundColor(bgCol);
+		holder.title.setText(curItem.getTitle());
+		holder.info.setText(curItem.getInfo());
 
-		TextView txTitle = (TextView) spinView.findViewById(R.id.label_title);
-		txTitle.setText(curItem.getTitle());
+		return convertView;
+	}
 
-		txTitle = (TextView) spinView.findViewById(R.id.label_info);
-		txTitle.setText(curItem.getInfo());
-		views.put(curItem.getId(), spinView);
-
-		return spinView;
+	public class ViewHolder {
+		TextView title;
+		TextView info;
+		View spacer;
 	}
 
 }

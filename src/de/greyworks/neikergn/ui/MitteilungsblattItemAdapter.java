@@ -47,18 +47,23 @@ public class MitteilungsblattItemAdapter extends BaseAdapter implements
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		MitteilungsblattItem curItem = mitteilungsblattItems.get(position);
-		View spinView;
+		ViewHolder holder = new ViewHolder();
 
-		spinView = inflater.inflate(R.layout.list_item_twoline, parent, false);
+		if (convertView == null) {
 
-		TextView txDatePages = (TextView) spinView
-				.findViewById(R.id.label_title);
-		txDatePages.setText(curItem.getDate());
-
-		TextView txTitle = (TextView) spinView.findViewById(R.id.label_info);
-		txTitle.setText(Html.fromHtml(curItem.getTitle()) + "\n"
+			convertView = inflater.inflate(R.layout.list_item_twoline, parent,
+					false);
+			holder.title = (TextView) convertView.findViewById(R.id.label_title);
+			holder.info = (TextView) convertView.findViewById(R.id.label_info);
+			holder.spacer = convertView.findViewById(R.id.v_spacer);
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
+		}
+		
+		holder.title.setText(curItem.getDate());
+		holder.info.setText(Html.fromHtml(curItem.getTitle()) + "\n"
 				+ curItem.getSizeString());
-
 		int bgCol;
 		if (curItem.isDownloaded()) {
 			bgCol = parent.getResources().getColor(R.color.lgreen_50);
@@ -66,10 +71,15 @@ public class MitteilungsblattItemAdapter extends BaseAdapter implements
 			bgCol = Color.LTGRAY;
 		}
 
-		spinView.findViewById(R.id.v_spacer).setBackgroundColor(bgCol);
-		spinView.findViewById(R.id.label_title).setBackgroundColor(bgCol);
+		holder.spacer.setBackgroundColor(bgCol);
+		holder.title.setBackgroundColor(bgCol);
 
-		return spinView;
+		return convertView;
 	}
 
+	static class ViewHolder {
+		TextView title;
+		TextView info;
+		View spacer;
+	}
 }

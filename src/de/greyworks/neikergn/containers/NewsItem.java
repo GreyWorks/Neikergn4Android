@@ -18,7 +18,7 @@ public class NewsItem implements Comparable<NewsItem> {
 	private int source = 0;
 	private Date date = null;
 
-	private static String[] srcShort = { "EN", "FT", "NN", "EN / NN", "NO"};
+	private static String[] srcShort = { "EN", "FT", "NN", "EN / NN", "NO" };
 	private static String[] srcLong = { "Erlanger Nachrichten",
 			"Fränkischer Tag", "Nürnberger Nachrichten",
 			"Erlanger Nachrichten / Nürnberger Nachrichten", "neikergn online" };
@@ -79,7 +79,8 @@ public class NewsItem implements Comparable<NewsItem> {
 			json.put("z", this.source);
 			json.put("d", this.date.getTime());
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "NewsItem to JSON fail");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "NewsItem to JSON fail");
 			e.printStackTrace();
 		}
 		return json;
@@ -96,7 +97,8 @@ public class NewsItem implements Comparable<NewsItem> {
 			item.date = new Date(d);
 			item.valid = true;
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "NewsItem from JSON fail");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "NewsItem from JSON fail");
 			e.printStackTrace();
 		}
 		return item;
@@ -112,10 +114,12 @@ public class NewsItem implements Comparable<NewsItem> {
 			item.source = obj.getInt("z");
 			item.valid = true;
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "NewsItem from web JSON fail");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "NewsItem from web JSON fail");
 			e.printStackTrace();
 		} catch (ParseException e) {
-			Log.e(Statics.TAG, "NewsItem from web date parsing fail");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "NewsItem from web date parsing fail");
 			e.printStackTrace();
 		}
 		return item;

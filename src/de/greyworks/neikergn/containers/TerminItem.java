@@ -66,7 +66,9 @@ public class TerminItem implements Comparable<TerminItem> {
 			StringBuilder info = new StringBuilder();
 			info.append(getDateInfo());
 			if (getAge() > 0) {
-				info.append("\n" + ((getAge()<2)?"Gestern":("Vor " + getAge() + " Tagen")) + "\n");
+				info.append("\n"
+						+ ((getAge() < 2) ? "Gestern"
+								: ("Vor " + getAge() + " Tagen")) + "\n");
 			} else if (getAge() > -1) {
 				info.append("\nHeute\n");
 			} else if (getAge() > -2) {
@@ -99,7 +101,8 @@ public class TerminItem implements Comparable<TerminItem> {
 			json.put("e", this.end.getTime());
 			json.put("m", this.more);
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "TerminItem to JSON fail");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "TerminItem to JSON fail");
 			e.printStackTrace();
 		}
 		return json;
@@ -118,7 +121,8 @@ public class TerminItem implements Comparable<TerminItem> {
 			item.more = json.getBoolean("m");
 			item.valid = true;
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "TerminItem from JSON fail");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "TerminItem from JSON fail");
 			e.printStackTrace();
 		}
 		return item;
@@ -137,10 +141,12 @@ public class TerminItem implements Comparable<TerminItem> {
 			item.more = obj.getString("m").equals("Y");
 			item.valid = true;
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "TerminItem from web JSON fail");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "TerminItem from web JSON fail");
 			e.printStackTrace();
 		} catch (ParseException e) {
-			Log.e(Statics.TAG, "TerminItem from web date parsing fail");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "TerminItem from web date parsing fail");
 			e.printStackTrace();
 		}
 		return item;

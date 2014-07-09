@@ -40,8 +40,10 @@ public class TerminModule extends Observable implements
 		} else {
 			setChanged();
 			notifyObservers();
-			Log.d(Statics.TAG, "Termin update skipped (deltaT < 24h = "
-					+ (upDiff / 24 / 60 / 60 / 1000) + ")");
+			if (Statics.DEBUG) {
+				Log.d(Statics.TAG, "Termin update skipped (deltaT < 24h = "
+						+ (upDiff / 24 / 60 / 60 / 1000) + ")");
+			}
 		}
 	}
 
@@ -109,7 +111,8 @@ public class TerminModule extends Observable implements
 			terminObj.put("items", terminArr);
 			FileModule.saveFile(Statics.ctx, terminObj.toString(), fileName);
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "Save Termine: JSON Error");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "Save Termine: JSON Error");
 			e.printStackTrace();
 		}
 	}
@@ -128,7 +131,8 @@ public class TerminModule extends Observable implements
 				}
 			}
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "Load Termine: JSON Error");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "Load Termine: JSON Error");
 			e.printStackTrace();
 		}
 
@@ -160,7 +164,8 @@ public class TerminModule extends Observable implements
 			setChanged();
 			notifyObservers();
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "JSON Error in Termin Module");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "JSON Error in Termin Module");
 			e.printStackTrace();
 		}
 	}

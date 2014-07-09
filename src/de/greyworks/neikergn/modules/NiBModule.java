@@ -40,8 +40,10 @@ public class NiBModule extends Observable implements ContentModule<NiBItem>,
 		} else {
 			setChanged();
 			notifyObservers();
-			Log.d(Statics.TAG, "NiB update skipped (deltaT < 24h = "
-					+ (upDiff / 24 / 60 / 60 / 1000) + ")");
+			if (Statics.DEBUG) {
+				Log.d(Statics.TAG, "NiB update skipped (deltaT < 24h = "
+						+ (upDiff / 24 / 60 / 60 / 1000) + ")");
+			}
 		}
 	}
 
@@ -75,9 +77,9 @@ public class NiBModule extends Observable implements ContentModule<NiBItem>,
 	public void cleanUp() {
 		Collections.sort(nibItems);
 		int myAge;
-		for(int i = nibItems.size() - 1; i > -1; i--) {
+		for (int i = nibItems.size() - 1; i > -1; i--) {
 			myAge = nibItems.get(i).getAge();
-			if(myAge > 90) {
+			if (myAge > 90) {
 				nibItems.remove(i);
 			}
 		}
@@ -95,7 +97,8 @@ public class NiBModule extends Observable implements ContentModule<NiBItem>,
 			nibObj.put("items", nibArr);
 			FileModule.saveFile(Statics.ctx, nibObj.toString(), fileName);
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "Save NiB: JSON Error");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "Save NiB: JSON Error");
 			e.printStackTrace();
 		}
 	}
@@ -114,7 +117,8 @@ public class NiBModule extends Observable implements ContentModule<NiBItem>,
 				}
 			}
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "Load NiB: JSON Error");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "Load NiB: JSON Error");
 			e.printStackTrace();
 		}
 
@@ -144,7 +148,8 @@ public class NiBModule extends Observable implements ContentModule<NiBItem>,
 			setChanged();
 			notifyObservers();
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "JSON Error in NiB Module");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "JSON Error in NiB Module");
 			e.printStackTrace();
 		}
 	}

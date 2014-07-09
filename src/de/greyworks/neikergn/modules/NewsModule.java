@@ -38,7 +38,8 @@ public class NewsModule extends Observable implements ContentModule<NewsItem>,
 			newsObj.put("items", newsArr);
 			FileModule.saveFile(Statics.ctx, newsObj.toString(), fileName);
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "Save News: JSON Error");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "Save News: JSON Error");
 			e.printStackTrace();
 		}
 	}
@@ -57,7 +58,8 @@ public class NewsModule extends Observable implements ContentModule<NewsItem>,
 				}
 			}
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "Load News: JSON Error");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "Load News: JSON Error");
 			e.printStackTrace();
 		}
 
@@ -79,8 +81,10 @@ public class NewsModule extends Observable implements ContentModule<NewsItem>,
 		} else {
 			setChanged();
 			notifyObservers();
-			Log.d(Statics.TAG, "News update skipped (deltaT < 20m = "
-					+ (upDiff / 60 / 1000) + ")");
+			if (Statics.DEBUG) {
+				Log.d(Statics.TAG, "News update skipped (deltaT < 20m = "
+						+ (upDiff / 60 / 1000) + ")");
+			}
 		}
 	}
 
@@ -147,7 +151,8 @@ public class NewsModule extends Observable implements ContentModule<NewsItem>,
 			setChanged();
 			notifyObservers();
 		} catch (JSONException e) {
-			Log.e(Statics.TAG, "JSON Error in News Module");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "JSON Error in News Module");
 			e.printStackTrace();
 		}
 

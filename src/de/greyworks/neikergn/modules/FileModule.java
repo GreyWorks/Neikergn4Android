@@ -30,19 +30,24 @@ public class FileModule {
 			fOut.write(content.getBytes());
 			fOut.close();
 		} catch (FileNotFoundException e) {
-			Log.e(Statics.TAG, "SaveFile: File not found: " + path);
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "SaveFile: File not found: " + path);
 			e.printStackTrace();
 		} catch (IOException e) {
-			Log.e(Statics.TAG, "SaveFile: IO Error");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "SaveFile: IO Error");
 			e.printStackTrace();
 		}
 	}
 
 	/**
 	 * load String from file in private mode
-	 * @param ctx		context
-	 * @param path		file path
-	 * @return			content String
+	 * 
+	 * @param ctx
+	 *            context
+	 * @param path
+	 *            file path
+	 * @return content String
 	 */
 	public static String loadFile(Context ctx, String path) {
 		String content = "";
@@ -58,7 +63,8 @@ public class FileModule {
 			}
 			content = sb.toString();
 		} catch (IOException e) {
-			Log.e(Statics.TAG, "LoadFile: IO Error");
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "LoadFile: IO Error");
 			e.printStackTrace();
 		}
 		return content;

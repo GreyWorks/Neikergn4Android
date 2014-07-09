@@ -85,8 +85,6 @@ public class MitteilungsblattFragment extends Fragment implements Observer {
 			@Override
 			public void onItemClick(AdapterView<?> parentView, View v,
 					int position, long id) {
-				// Log.d(Statics.TAG,
-				// mitteilungsblattModule.getMitteilungsblattItems().get(position).getTitle());
 
 				MitteilungsblattItem item = mitteilungsblattModule
 						.getItems().get(position);
