@@ -38,6 +38,8 @@ public class Statics {
 		Toast.makeText(ctx, text, Toast.LENGTH_SHORT).show();
 	}
 	
+	
+	
 
 
 }

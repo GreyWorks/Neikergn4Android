@@ -141,7 +141,7 @@ public class NewsModule extends Observable implements ContentModule<NewsItem>,
 			JSONArray newsObjs = new JSONArray(http.getContent());
 			for (int i = 0; i < newsObjs.length(); i++) {
 				NewsItem item = NewsItem.fromWeb(newsObjs.getJSONObject(i));
-				if (!newsItems.contains(item)) {
+				if (!newsItems.contains(item) && item.isValid()) {
 					newsItems.add(item);
 				}
 			}

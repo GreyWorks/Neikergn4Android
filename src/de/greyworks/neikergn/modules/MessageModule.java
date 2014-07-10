@@ -139,7 +139,7 @@ public class MessageModule extends Observable implements
 			for (int i = 0; i < msgObjs.length(); i++) {
 				MessageItem item = MessageItem
 						.fromWeb(msgObjs.getJSONObject(i));
-				if (!messageItems.contains(item)) {
+				if (!messageItems.contains(item) && item.isValid()) {
 					messageItems.add(item);
 				}
 			}

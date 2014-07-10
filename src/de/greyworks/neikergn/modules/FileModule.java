@@ -1,6 +1,7 @@
 package de.greyworks.neikergn.modules;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -68,6 +69,55 @@ public class FileModule {
 			e.printStackTrace();
 		}
 		return content;
+	}
+
+	/**
+	 * Deletes all json files stored by the app
+	 * @param ctx	context
+	 */
+	public static void deleteSavedData(Context ctx) {
+		removeAllFilesIn(ctx.getFilesDir(), ctx);
+		// remove all module entries to force complete reload
+		Statics.newsModule.getItems().clear();
+		Statics.newsModule.forceUpdateWeb();
+		Statics.messageModule.getItems().clear();
+		Statics.messageModule.forceUpdateWeb();
+		Statics.nibModule.getItems().clear();
+		Statics.nibModule.forceUpdateWeb();
+		Statics.terminModule.getItems().clear();
+		Statics.terminModule.forceUpdateWeb();
+		Statics.showToast("Daten gelöscht. Aktualisierung gestartet.");
+
+	}
+
+	/**
+	 * removes all downloads such as abfallkalender and mitteilungsblatt
+	 * @param ctx
+	 */
+	public static void deleteExternalFiles(Context ctx) {
+		removeAllFilesIn(ctx.getExternalFilesDir(null), ctx);
+		File dirMB = new File(ctx.getExternalFilesDir(null).getAbsolutePath()
+				+ "/mitteilungsblatt");
+		if (dirMB.isDirectory()) {
+			removeAllFilesIn(dirMB, ctx);
+		}
+		Statics.showToast("Downloads gelöscht");
+	}
+
+	/**
+	 * Service method for delete functions
+	 * @param dir	target directory
+	 * @param ctx	context
+	 */
+	private static void removeAllFilesIn(File dir, Context ctx) {
+		File files[] = dir.listFiles();
+		for (File f : files) {
+			if (f.isFile()) {
+				if (Statics.DEBUG)
+					Log.d(Statics.TAG, "Deleting file: " + f.getAbsolutePath());
+				f.delete();
+			}
+		}
 	}
 
 }

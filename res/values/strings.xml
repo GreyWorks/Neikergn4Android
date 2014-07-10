@@ -18,6 +18,8 @@
     <string name="label_abfallkalender">Abfallkalender</string>
     <string name="label_downloadinfo">Grau hinterlegte Dateien müssen erst herunter geladen werden.\nFür das Öffnen von PDF Dokumenten ist eine separate App wie Adobe Reader nötig.</string>
     <string name="msg_unimplemented">In dieser Version noch nicht verfügbar</string>
+    <string name="btn_del_cache">Zwischengespeicherte Daten löschen</string>
+    <string name="btn_del_dl">Gespeicherte Downloads löschen</string>
     <string name="about_info"></string>
     
     
@@ -32,7 +34,7 @@
     
     <string name="faq">
         Im Wiki:\n
-        * geplante Funktionen\n
+        * Geplante Funktionen\n
         * Häufig gestellte Fragen\n
         * Changelog\n
         * Bekannte Probleme\n

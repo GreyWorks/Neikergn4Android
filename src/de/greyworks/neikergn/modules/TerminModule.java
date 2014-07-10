@@ -77,7 +77,7 @@ public class TerminModule extends Observable implements
 		float j;
 		for (int i = 0; i < terminItems.size(); i++) {
 			j = terminItems.get(i).getAge();
-			if (j < 0) {
+			if (j < 1) {
 				return i;
 			}
 		}
@@ -89,6 +89,7 @@ public class TerminModule extends Observable implements
 	public void cleanUp() {
 		// no iterator to prevent concurrency problems
 		// caused by removing iterating item
+		Collections.sort(terminItems, Collections.reverseOrder());
 		int myAge;
 		for (int i = terminItems.size() - 1; i > -1; i--) {
 			myAge = terminItems.get(i).getAge();
@@ -96,7 +97,7 @@ public class TerminModule extends Observable implements
 				terminItems.remove(i);
 			}
 		}
-		Collections.sort(terminItems, Collections.reverseOrder());
+		
 	}
 
 	private void saveToFile() {
@@ -153,8 +154,8 @@ public class TerminModule extends Observable implements
 			for (int i = 0; i < terminObjs.length(); i++) {
 				TerminItem item = TerminItem.fromWeb(terminObjs
 						.getJSONObject(i));
-				// no items more than 31 days in the future
-				if (!terminItems.contains(item) && item.getAge() > -30) {
+				// no items more than 31 days in the future & back 7 days
+				if (!terminItems.contains(item) && item.getAge() > -30 && item.getAge() < 8 && item.isValid()) {
 					terminItems.add(item);
 				}
 			}

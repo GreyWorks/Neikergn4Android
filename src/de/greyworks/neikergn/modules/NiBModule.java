@@ -138,7 +138,7 @@ public class NiBModule extends Observable implements ContentModule<NiBItem>,
 			JSONArray nibObjs = new JSONArray(http.getContent());
 			for (int i = 0; i < nibObjs.length(); i++) {
 				NiBItem item = NiBItem.fromWeb(nibObjs.getJSONObject(i));
-				if (!nibItems.contains(item)) {
+				if (!nibItems.contains(item) && item.isValid()) {
 					nibItems.add(item);
 				}
 			}

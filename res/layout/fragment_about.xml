@@ -72,8 +72,21 @@
                 android:id="@+id/about_faq"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
                 android:autoLink="web"
                 android:text="@string/faq" />
+
+            <Button
+                android:id="@+id/btn_del_cache"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_del_cache" />
+
+            <Button
+                android:id="@+id/btn_del_dl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_del_dl" />
 
         </LinearLayout>
     </ScrollView>

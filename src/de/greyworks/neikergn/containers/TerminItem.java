@@ -165,7 +165,7 @@ public class TerminItem implements Comparable<TerminItem> {
 
 	@Override
 	public int compareTo(TerminItem another) {
-		Long diff = another.start.getTime() - this.start.getTime();
+		long diff = another.start.getTime() - this.start.getTime();
 		if (diff < 0) {
 			return -1;
 		} else if (diff == 0) {

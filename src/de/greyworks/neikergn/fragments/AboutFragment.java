@@ -12,11 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ImageView;
 import de.greyworks.neikergn.OverviewActivity;
 import de.greyworks.neikergn.R;
 import de.greyworks.neikergn.Statics;
+import de.greyworks.neikergn.modules.FileModule;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -65,20 +67,38 @@ public class AboutFragment extends Fragment {
 						TextView t = (TextView) v;
 						if (awesomeCounter == 10) {
 							t.setText(R.string.about_app_aa);
-						} else if(awesomeCounter > 10) {
+						} else if (awesomeCounter > 10) {
 							t.setText(R.string.about_app);
 							awesomeCounter = 0;
 						}
 					}
 				});
-		
-		((ImageView) rootView.findViewById(R.id.img_greyworks)).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://greyworks.de/?page=home"));
-				startActivity(browserIntent);
-			}
-		});
+
+		((ImageView) rootView.findViewById(R.id.img_greyworks))
+				.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+								Uri.parse("http://greyworks.de/?page=home"));
+						startActivity(browserIntent);
+					}
+				});
+
+		((Button) rootView.findViewById(R.id.btn_del_cache))
+				.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						FileModule.deleteSavedData(Statics.ctx);
+					}
+				});
+
+		((Button) rootView.findViewById(R.id.btn_del_dl))
+				.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						FileModule.deleteExternalFiles(Statics.ctx);
+					}
+				});
 
 		return rootView;
 	}

@@ -106,7 +106,7 @@ public class MitteilungsblattModule extends Observable implements
 			for (int i = 0; i < mBlattObjs.length(); i++) {
 				MitteilungsblattItem item = MitteilungsblattItem
 						.fromWeb(mBlattObjs.getJSONObject(i));
-				if (!mitteilungsblattItems.contains(item)) {
+				if (!mitteilungsblattItems.contains(item) && item.isValid()) {
 					mitteilungsblattItems.add(item);
 				}
 			}
