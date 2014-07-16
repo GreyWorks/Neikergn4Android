@@ -54,6 +54,7 @@ public class NiBFragment extends Fragment implements Observer {
 				FragmentManager fragmentManager = getFragmentManager();
 				fragmentManager
 						.beginTransaction()
+						.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
 						.replace(
 								Statics.ovr.getFragContent(),
 								ImageFragment.newInstance(

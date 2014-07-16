@@ -56,7 +56,7 @@ public class NewsFragment extends Fragment implements Observer {
 				FragmentManager fragmentManager = getFragmentManager();
 				fragmentManager
 						.beginTransaction()
-						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+						.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
 						.replace(
 								Statics.ovr.getFragContent(),
 								NewsContentFragment.newInstance(newsModule

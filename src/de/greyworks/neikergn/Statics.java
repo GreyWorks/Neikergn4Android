@@ -18,7 +18,7 @@ public class Statics {
 	public static File extStor;
 	
 	public static final boolean VERBOSE = false;
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 	public static final boolean WARN = false;
 	public static final boolean ERROR = true;
 	

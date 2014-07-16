@@ -3,7 +3,6 @@ package de.greyworks.neikergn;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -94,13 +93,13 @@ public class OverviewActivity extends Activity implements
 		case 0:
 			// switch to news
 			fragmentManager.beginTransaction()
-			.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+					.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
 					.replace(R.id.container, NewsFragment.newInstance())
 					.commit();
 			if (isTwoFrag()) {
 				fragmentManager
 						.beginTransaction()
-						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+						.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
 						.replace(
 								R.id.container_content,
 								ImageFragment.newInstance("", "",
@@ -112,13 +111,13 @@ public class OverviewActivity extends Activity implements
 		case 1:
 			// switch to messages
 			fragmentManager.beginTransaction()
-			.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+					.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
 					.replace(R.id.container, MessagesFragment.newInstance())
 					.commit();
 			if (isTwoFrag()) {
 				fragmentManager
 						.beginTransaction()
-						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+						.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
 						.replace(
 								R.id.container_content,
 								ImageFragment.newInstance("", "",
@@ -129,13 +128,13 @@ public class OverviewActivity extends Activity implements
 		case 2:
 			// switch to NIB
 			fragmentManager.beginTransaction()
-			.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+					.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
 					.replace(R.id.container, NiBFragment.newInstance())
 					.commit();
 			if (isTwoFrag()) {
 				fragmentManager
 						.beginTransaction()
-						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+						.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
 						.replace(
 								R.id.container_content,
 								ImageFragment
@@ -147,13 +146,13 @@ public class OverviewActivity extends Activity implements
 		case 3:
 			// switch to appointments
 			fragmentManager.beginTransaction()
-			.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+					.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
 					.replace(R.id.container, TerminFragment.newInstance())
 					.commit();
 			if (isTwoFrag()) {
 				fragmentManager
 						.beginTransaction()
-						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+						.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
 						.replace(R.id.container_content,
 								ImageFragment.newInstance("", "", "")).commit();
 			}
@@ -163,13 +162,13 @@ public class OverviewActivity extends Activity implements
 			// switch to mitteilungsblatt
 			fragmentManager
 					.beginTransaction()
-					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+					.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
 					.replace(R.id.container,
 							MitteilungsblattFragment.newInstance()).commit();
 			if (isTwoFrag()) {
 				fragmentManager
 						.beginTransaction()
-						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+						.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
 						.replace(R.id.container_content,
 								ImageFragment.newInstance("", "", "")).commit();
 			}
@@ -178,13 +177,13 @@ public class OverviewActivity extends Activity implements
 		case 5:
 			// switch to documents
 			fragmentManager.beginTransaction()
-			.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+					.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
 					.replace(R.id.container, DocumentsFragment.newInstance())
 					.commit();
 			if (isTwoFrag()) {
 				fragmentManager
 						.beginTransaction()
-						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+						.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
 						.replace(R.id.container_content,
 								ImageFragment.newInstance("", "", "")).commit();
 			}
@@ -193,13 +192,13 @@ public class OverviewActivity extends Activity implements
 		case 6:
 			// switch to about
 			fragmentManager.beginTransaction()
-			.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+					.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
 					.replace(R.id.container, AboutFragment.newInstance())
 					.commit();
 			if (isTwoFrag()) {
 				fragmentManager
 						.beginTransaction()
-						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+						.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
 						.replace(R.id.container_content,
 								ImageFragment.newInstance("", "", "")).commit();
 			}
