@@ -6,6 +6,7 @@ import java.util.Observer;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -55,8 +56,9 @@ public class NewsFragment extends Fragment implements Observer {
 				FragmentManager fragmentManager = getFragmentManager();
 				fragmentManager
 						.beginTransaction()
+						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 						.replace(
-								R.id.container,
+								Statics.ovr.getFragContent(),
 								NewsContentFragment.newInstance(newsModule
 										.getItems().get(position).getId()))
 						.addToBackStack(null).commit();

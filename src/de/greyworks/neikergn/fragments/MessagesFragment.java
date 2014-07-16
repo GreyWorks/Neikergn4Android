@@ -63,7 +63,7 @@ public class MessagesFragment extends Fragment implements Observer {
 				fragmentManager
 						.beginTransaction()
 						.replace(
-								R.id.container,
+								Statics.ovr.getFragContent(),
 								MessageContentFragment.newInstance(messageModule
 										.getItems().get(position).getId()))
 						.addToBackStack(null).commit();

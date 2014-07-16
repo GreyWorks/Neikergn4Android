@@ -1,0 +1,46 @@
+<!-- A DrawerLayout is intended to be used as the top-level content view using match_parent for both width and height to consume the full space available. -->
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.greyworks.neikergn.OverviewActivity" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="0dp" >
+    
+         <ProgressBar
+        android:id="@+id/progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-7dp" />
+        
+         <FrameLayout
+             android:id="@+id/container"
+             android:layout_width="300dp"
+             android:layout_height="fill_parent"
+             android:layout_below="@+id/progress"
+             android:minWidth="300dp" />
+         
+         <FrameLayout
+             android:id="@+id/container_content"
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent"
+             android:layout_alignTop="@+id/container"
+             android:layout_toRightOf="@+id/container" />
+
+    </RelativeLayout>
+
+   
+
+    <fragment
+        android:id="@+id/navigation_drawer"
+        android:name="de.greyworks.neikergn.NavigationDrawerFragment"
+        android:layout_width="@dimen/navigation_drawer_width"
+        android:layout_height="match_parent"
+        android:layout_gravity="start" />
+
+</android.support.v4.widget.DrawerLayout>

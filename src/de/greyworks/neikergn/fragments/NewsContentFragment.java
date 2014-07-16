@@ -95,6 +95,7 @@ public class NewsContentFragment extends Fragment implements Observer {
 				+ "</td></tr></table>";
 
 		web.loadDataWithBaseURL("", content, "text/html", "UTF-8", "");
+		web.setBackgroundColor(0x00000000);
 		pDiag.cancel();
 
 	}

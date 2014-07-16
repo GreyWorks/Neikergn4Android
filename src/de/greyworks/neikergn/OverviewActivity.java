@@ -3,14 +3,17 @@ package de.greyworks.neikergn;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ProgressBar;
 import de.greyworks.neikergn.fragments.AboutFragment;
 import de.greyworks.neikergn.fragments.DocumentsFragment;
+import de.greyworks.neikergn.fragments.ImageFragment;
 import de.greyworks.neikergn.fragments.MessagesFragment;
 import de.greyworks.neikergn.fragments.MitteilungsblattFragment;
 import de.greyworks.neikergn.fragments.NewsFragment;
@@ -27,6 +30,8 @@ public class OverviewActivity extends Activity implements
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 	private ProgressBar mProgress;
 	private int progressCount;
+	private boolean twoFrag = false;
+	private int fragContent;
 
 	/**
 	 * Used to store the last screen title. For use in
@@ -48,6 +53,14 @@ public class OverviewActivity extends Activity implements
 		Statics.nibModule = new NiBModule();
 
 		setContentView(R.layout.activity_overview);
+
+		View frag_content = findViewById(R.id.container_content);
+		twoFrag = (frag_content != null);
+		if (twoFrag) {
+			fragContent = R.id.container_content;
+		} else {
+			fragContent = R.id.container;
+		}
 
 		mProgress = (ProgressBar) findViewById(R.id.progress);
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
@@ -72,6 +85,8 @@ public class OverviewActivity extends Activity implements
 			fragmentManager.popBackStack(fragmentManager.getBackStackEntryAt(0)
 					.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
 		}
+		if (isTwoFrag())
+			findViewById(R.id.container).setVisibility(View.VISIBLE);
 
 		Drawable bg = getResources().getDrawable(R.drawable.d_lgreen_900);
 		switch (position) {
@@ -79,52 +94,115 @@ public class OverviewActivity extends Activity implements
 		case 0:
 			// switch to news
 			fragmentManager.beginTransaction()
+			.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 					.replace(R.id.container, NewsFragment.newInstance())
 					.commit();
+			if (isTwoFrag()) {
+				fragmentManager
+						.beginTransaction()
+						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+						.replace(
+								R.id.container_content,
+								ImageFragment.newInstance("", "",
+										"Artikel wählen")).commit();
+			}
 			bg = getResources().getDrawable(R.drawable.d_lgreen_900);
 			break;
 
 		case 1:
 			// switch to messages
 			fragmentManager.beginTransaction()
+			.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 					.replace(R.id.container, MessagesFragment.newInstance())
 					.commit();
+			if (isTwoFrag()) {
+				fragmentManager
+						.beginTransaction()
+						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+						.replace(
+								R.id.container_content,
+								ImageFragment.newInstance("", "",
+										"Meldung wählen")).commit();
+			}
 			bg = getResources().getDrawable(R.drawable.d_lblue_900);
 			break;
 		case 2:
 			// switch to NIB
 			fragmentManager.beginTransaction()
+			.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 					.replace(R.id.container, NiBFragment.newInstance())
 					.commit();
+			if (isTwoFrag()) {
+				fragmentManager
+						.beginTransaction()
+						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+						.replace(
+								R.id.container_content,
+								ImageFragment
+										.newInstance("", "", "Bild wählen"))
+						.commit();
+			}
 			bg = getResources().getDrawable(R.drawable.d_pink_900);
 			break;
 		case 3:
 			// switch to appointments
 			fragmentManager.beginTransaction()
+			.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 					.replace(R.id.container, TerminFragment.newInstance())
 					.commit();
+			if (isTwoFrag()) {
+				fragmentManager
+						.beginTransaction()
+						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+						.replace(R.id.container_content,
+								ImageFragment.newInstance("", "", "")).commit();
+			}
 			bg = getResources().getDrawable(R.drawable.d_dorange_900);
 			break;
 		case 4:
 			// switch to mitteilungsblatt
 			fragmentManager
 					.beginTransaction()
+					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 					.replace(R.id.container,
 							MitteilungsblattFragment.newInstance()).commit();
+			if (isTwoFrag()) {
+				fragmentManager
+						.beginTransaction()
+						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+						.replace(R.id.container_content,
+								ImageFragment.newInstance("", "", "")).commit();
+			}
 			bg = getResources().getDrawable(R.drawable.d_grey_800);
 			break;
 		case 5:
-			// siwtch to documents
+			// switch to documents
 			fragmentManager.beginTransaction()
+			.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 					.replace(R.id.container, DocumentsFragment.newInstance())
 					.commit();
+			if (isTwoFrag()) {
+				fragmentManager
+						.beginTransaction()
+						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+						.replace(R.id.container_content,
+								ImageFragment.newInstance("", "", "")).commit();
+			}
 			bg = getResources().getDrawable(R.drawable.d_grey_800);
 			break;
 		case 6:
 			// switch to about
 			fragmentManager.beginTransaction()
+			.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 					.replace(R.id.container, AboutFragment.newInstance())
 					.commit();
+			if (isTwoFrag()) {
+				fragmentManager
+						.beginTransaction()
+						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+						.replace(R.id.container_content,
+								ImageFragment.newInstance("", "", "")).commit();
+			}
 			bg = getResources().getDrawable(R.drawable.d_grey_900);
 			break;
 		default:
@@ -188,6 +266,14 @@ public class OverviewActivity extends Activity implements
 		}
 		mProgress.setIndeterminate(progressCount > 0);
 
+	}
+
+	public boolean isTwoFrag() {
+		return twoFrag;
+	}
+
+	public int getFragContent() {
+		return fragContent;
 	}
 
 }

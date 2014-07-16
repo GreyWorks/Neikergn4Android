@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.RandomAccessFile;
 
 import android.content.Context;
 import android.util.Log;
@@ -72,8 +73,77 @@ public class FileModule {
 	}
 
 	/**
+	 * save String to file in private mode
+	 * 
+	 * @param ctx
+	 *            context
+	 * @param content
+	 *            file content to write
+	 * @param path
+	 *            file path
+	 */
+	public static void saveFileBytes(Context ctx, byte[] content, String path) {
+		FileOutputStream fOut;
+		try {
+			fOut = ctx.openFileOutput(path, Context.MODE_PRIVATE);
+			fOut.write(content);
+			fOut.close();
+		} catch (FileNotFoundException e) {
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "SaveFile: File not found: " + path);
+			e.printStackTrace();
+		} catch (IOException e) {
+			if (Statics.ERROR)
+				Log.e(Statics.TAG, "SaveFile: IO Error");
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * load String from file in private mode
+	 * 
+	 * @param ctx
+	 *            context
+	 * @param path
+	 *            file path
+	 * @return content String
+	 */
+	public static byte[] loadFileBytes(Context ctx, String path) {
+		byte[] content = null;
+		File f = new File(Statics.ctx.getFilesDir().getAbsolutePath() + "/"
+				+ path);
+		if (f.exists()) {
+			RandomAccessFile fRand = null;
+			try {
+				fRand = new RandomAccessFile(f, "r");
+				long longlength = fRand.length();
+	            int length = (int) longlength;
+				content = new byte[length];
+				fRand.readFully(content);
+
+
+			
+			} catch (IOException e) {
+				if (Statics.ERROR)
+					Log.e(Statics.TAG, "LoadFile: IO Error");
+				e.printStackTrace();
+			} finally {
+				try {
+					fRand.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			return content;
+		} else
+			return null;
+	}
+
+	/**
 	 * Deletes all json files stored by the app
-	 * @param ctx	context
+	 * 
+	 * @param ctx
+	 *            context
 	 */
 	public static void deleteSavedData(Context ctx) {
 		removeAllFilesIn(ctx.getFilesDir(), ctx);
@@ -92,6 +162,7 @@ public class FileModule {
 
 	/**
 	 * removes all downloads such as abfallkalender and mitteilungsblatt
+	 * 
 	 * @param ctx
 	 */
 	public static void deleteExternalFiles(Context ctx) {
@@ -106,8 +177,11 @@ public class FileModule {
 
 	/**
 	 * Service method for delete functions
-	 * @param dir	target directory
-	 * @param ctx	context
+	 * 
+	 * @param dir
+	 *            target directory
+	 * @param ctx
+	 *            context
 	 */
 	private static void removeAllFilesIn(File dir, Context ctx) {
 		File files[] = dir.listFiles();

@@ -5,6 +5,7 @@ import java.util.Observer;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,10 +13,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import de.greyworks.neikergn.OverviewActivity;
 import de.greyworks.neikergn.R;
 import de.greyworks.neikergn.Statics;
+import de.greyworks.neikergn.containers.NiBItem;
 import de.greyworks.neikergn.modules.NiBModule;
 import de.greyworks.neikergn.ui.NiBItemAdapter;
 
@@ -40,6 +44,25 @@ public class NiBFragment extends Fragment implements Observer {
 		View rootView = inflater.inflate(R.layout.fragment_list, container,
 				false);
 		lstNib = (ListView) rootView.findViewById(R.id.list_lst);
+
+		lstNib.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parentView, View v,
+					int position, long id) {
+				NiBItem item = nibModule.getItems().get(position);
+				FragmentManager fragmentManager = getFragmentManager();
+				fragmentManager
+						.beginTransaction()
+						.replace(
+								Statics.ovr.getFragContent(),
+								ImageFragment.newInstance(
+										Statics.extStor.getAbsolutePath()
+												+ "/nib/" + item.getPicture(),
+										item.getTitle(), ""))
+						.addToBackStack(null).commit();
+			}
+		});
 
 		nibModule = Statics.nibModule;
 
