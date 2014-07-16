@@ -84,8 +84,6 @@ public class OverviewActivity extends Activity implements
 			fragmentManager.popBackStack(fragmentManager.getBackStackEntryAt(0)
 					.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
 		}
-		if (isTwoFrag())
-			findViewById(R.id.container).setVisibility(View.VISIBLE);
 
 		Drawable bg = getResources().getDrawable(R.drawable.d_lgreen_900);
 		switch (position) {

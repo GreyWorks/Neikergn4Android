@@ -9,6 +9,7 @@
         android:id="@+id/nib_img"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:contentDescription="@string/app_name"
         android:scaleType="fitCenter" />
 
     <TextView
@@ -28,7 +29,6 @@
         android:layout_below="@+id/nib_img"
         android:layout_centerHorizontal="true"
         android:paddingLeft="3dp"
-        android:text="Lade.."
         android:textColor="#000"
         android:textSize="14sp"
         android:textStyle="bold" />

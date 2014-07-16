@@ -67,10 +67,15 @@ public class NiBItemAdapter extends BaseAdapter implements SpinnerAdapter {
 			holder = (ViewHolder) convertView.getTag();
 
 		}
-		new DownloadImageTask(holder.img)
-				.execute("http://www.neunkirchen-am-brand.de/images/bdm/thumb/"
-						+ curItem.getPicture());
-
+		
+		if (curItem.getLocalFile().exists()) {
+			// get local file
+			holder.img.setImageURI(Uri.fromFile(curItem.getLocalFile()));
+		} else {
+			// download file
+			new DownloadImageTask(holder.img)
+					.execute(curItem);
+		}
 		holder.title.setText(curItem.getTitle());
 		holder.info.setText(curItem.getText());
 		return convertView;
@@ -80,10 +85,9 @@ public class NiBItemAdapter extends BaseAdapter implements SpinnerAdapter {
 		TextView title;
 		TextView info;
 		ImageView img;
-		Bitmap bmp;
 	}
 
-	private class DownloadImageTask extends AsyncTask<String, Void, File> {
+	private class DownloadImageTask extends AsyncTask<NiBItem, Void, File> {
 		ImageView img;
 
 		public DownloadImageTask(ImageView img) {
@@ -91,27 +95,26 @@ public class NiBItemAdapter extends BaseAdapter implements SpinnerAdapter {
 		}
 
 		@Override
-		protected File doInBackground(String... params) {
-
+		protected File doInBackground(NiBItem... params) {
+			NiBItem item = params[0];
 			// check if dir exists, else create it
 			File nibDir = new File(Statics.extStor.getAbsolutePath() + "/nib");
 			if (!nibDir.exists()) {
 				nibDir.mkdirs();
 			}
-			String[] splits = params[0].split("/");
-			File localFile = new File(Statics.extStor.getAbsolutePath()
-					+ "/nib/" + splits[splits.length - 1]);
-			if (!localFile.exists()) {
+			
+			if (!item.getLocalFile().exists()) {
 				// load from web
 				if (Statics.DEBUG)
 					Log.d(Statics.TAG, "Load image from storage");
 				try {
-					URL url = new URL(params[0]);
+					URL url = new URL("http://www.neunkirchen-am-brand.de/images/bdm/thumb/"
+							+ item.getPicture());
 					URLConnection connection = url.openConnection();
 					Bitmap bmp = BitmapFactory.decodeStream(connection
 							.getInputStream());
 
-					FileOutputStream fOut = new FileOutputStream(localFile);
+					FileOutputStream fOut = new FileOutputStream(item.getLocalFile());
 					bmp.compress(Bitmap.CompressFormat.JPEG, 70, fOut);
 					fOut.close();
 				} catch (Exception e) {
@@ -119,7 +122,7 @@ public class NiBItemAdapter extends BaseAdapter implements SpinnerAdapter {
 				}
 			}
 
-			return localFile;
+			return item.getLocalFile();
 		}
 
 		@Override

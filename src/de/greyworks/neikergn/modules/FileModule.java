@@ -172,6 +172,11 @@ public class FileModule {
 		if (dirMB.isDirectory()) {
 			removeAllFilesIn(dirMB, ctx);
 		}
+		File dirNiB = new File(ctx.getExternalFilesDir(null).getAbsolutePath()
+				+ "/nib");
+		if (dirNiB.isDirectory()) {
+			removeAllFilesIn(dirNiB, ctx);
+		}
 		Statics.showToast("Downloads gelöscht");
 	}
 

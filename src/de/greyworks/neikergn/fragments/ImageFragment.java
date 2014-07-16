@@ -52,9 +52,22 @@ public class ImageFragment extends Fragment {
 		this.title = args.getString("title");
 		this.info = args.getString("info");
 
-		((TextView) rootView.findViewById(R.id.label_title))
-				.setText(this.title);
-		((TextView) rootView.findViewById(R.id.label_info)).setText(this.info);
+		if (this.title.length() > 0) {
+			((TextView) rootView.findViewById(R.id.label_title))
+					.setText(this.title);
+		} else {
+			((TextView) rootView.findViewById(R.id.label_title))
+					.setVisibility(View.GONE);
+		}
+		
+		if (this.info.length() > 0) {
+			((TextView) rootView.findViewById(R.id.label_info))
+					.setText(this.info);
+		} else {
+			((TextView) rootView.findViewById(R.id.label_info))
+					.setVisibility(View.GONE);
+		}
+		
 		ImageView img = (ImageView) rootView.findViewById(R.id.image);
 		boolean isSet = false;
 		if (this.path.length() > 0) {
@@ -64,7 +77,7 @@ public class ImageFragment extends Fragment {
 				isSet = true;
 			}
 		}
-		if(!isSet) {
+		if (!isSet) {
 			img.setAlpha(0.5f);
 		}
 

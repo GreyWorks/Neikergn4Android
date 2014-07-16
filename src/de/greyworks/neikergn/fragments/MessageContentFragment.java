@@ -5,7 +5,6 @@ import java.util.Observer;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +29,7 @@ public class MessageContentFragment extends Fragment implements Observer {
 	private String baseUrl = "http://www.neunkirchen-am-brand.de/app/aktuelles_text.php?id=";
 	private String content = "";
 	HttpModule http = new HttpModule();
-	ProgressDialog pDiag;
+
 
 	/**
 	 * Returns a new instance of this fragment for the given section number.
@@ -60,9 +59,7 @@ public class MessageContentFragment extends Fragment implements Observer {
 
 		web.getSettings().setLoadWithOverviewMode(true);
 
-		pDiag = new ProgressDialog(Statics.ctx);
-		pDiag.setMessage("Lade Meldung ...");
-		pDiag.show();
+		Statics.ovr.setProgressBar(1);
 		// initialize http module;
 		http.addObserver(this);
 		http.httpGet(baseUrl + id);
@@ -89,7 +86,8 @@ public class MessageContentFragment extends Fragment implements Observer {
 				+ http.getContent().replaceAll("(\r\n|\n)", "<br />") + "</td></tr></table>";
 
 		web.loadDataWithBaseURL("", content, "text/html", "UTF-8", "");
-		pDiag.cancel();
+		web.setBackgroundColor(0x00000000);
+		Statics.ovr.setProgressBar(-1);
 
 	}
 }

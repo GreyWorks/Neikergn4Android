@@ -1,5 +1,6 @@
 package de.greyworks.neikergn.containers;
 
+import java.io.File;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -44,6 +45,13 @@ public class NiBItem implements Comparable<NiBItem> {
 
 	public String getPicture() {
 		return this.picture;
+	}
+	
+	public File getLocalFile() {
+		File localFile = new File(Statics.extStor.getAbsolutePath() + "/nib/"
+				+ getPicture());
+		return localFile;
+		
 	}
 
 	public String getDate() {
