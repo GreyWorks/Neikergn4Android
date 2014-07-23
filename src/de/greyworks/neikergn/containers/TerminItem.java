@@ -1,12 +1,15 @@
 package de.greyworks.neikergn.containers;
 
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.text.format.DateUtils;
 import android.util.Log;
+import android.widget.CalendarView;
 import de.greyworks.neikergn.Statics;
 
 public class TerminItem implements Comparable<TerminItem> {
@@ -45,50 +48,50 @@ public class TerminItem implements Comparable<TerminItem> {
 		return this.ort;
 	}
 
-	public String getDate() {
+	public Date getDate() {
+		return this.start;
+	}
+
+	public String getDateString() {
 		return Statics.dateFormatOutFull.format(this.start);
 	}
 
-	public String getEnd() {
+	public String getEndString() {
 		return Statics.dateFormatOutFull.format(this.end);
-	}
-
-	public String getDateInfo() {
-		if (this.end.getTime() - this.start.getTime() < 5) {
-			return "Am " + this.getDate();
-		} else {
-			return "Von " + this.getDate() + " bis " + this.getEnd();
-		}
 	}
 
 	public String getInfo() {
 		if (infoCache.isEmpty()) {
-			StringBuilder info = new StringBuilder();
-			info.append(getDateInfo());
-			if (getAge() > 0) {
-				info.append("\n"
-						+ ((getAge() < 2) ? "Gestern"
-								: ("Vor " + getAge() + " Tagen")) + "\n");
-			} else if (getAge() > -1) {
-				info.append("\nHeute\n");
-			} else if (getAge() > -2) {
-				info.append("\nMorgen\n");
-			} else if (getAge() > -8) {
-				info.append("\nIn " + (-getAge()) + " Tagen\n");
-			} else {
-				info.append("\nIn " + (-getAge()) + " Tagen\n");
+			Date now = new Date();
+			int flags = DateUtils.FORMAT_SHOW_DATE
+					| DateUtils.FORMAT_SHOW_WEEKDAY
+					| DateUtils.FORMAT_ABBREV_WEEKDAY;
+			// show time only if not starting at midnight
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(start);
+			if (cal.get(Calendar.HOUR_OF_DAY) + cal.get(Calendar.MINUTE) > 0) {
+				flags = flags | DateUtils.FORMAT_SHOW_TIME;
 			}
-			info.append(getOrt());
-			infoCache = info.toString();
+			// if within a week, show "in x days" or "x days ago"
+			if (Math.abs(now.getTime() - start.getTime()) < DateUtils.WEEK_IN_MILLIS) {
+				infoCache = (String) DateUtils.getRelativeTimeSpanString(
+						this.start.getTime(), now.getTime(),
+						DateUtils.DAY_IN_MILLIS, 0)
+						+ "\n";
+			}
+			infoCache += DateUtils.formatDateRange(Statics.ctx,
+					this.start.getTime(), this.end.getTime(), flags);
 		}
 		return infoCache;
 	}
 
 	public int getAge() {
-		float devider = 1000 * 60 * 60 * 24;
-		int diff = (int) (new Date().getTime() / devider)
-				- (int) (this.start.getTime() / devider);
-		return diff;
+		long msInDay = 1000 * 60 * 60 * 24;
+		long time = new Date().getTime();
+		long msGoneInDay = time % msInDay;
+		long diff = (time - msGoneInDay) - this.start.getTime();
+
+		return (int) Math.ceil(diff / msInDay);
 	}
 
 	public JSONObject toJSON() {
@@ -138,6 +141,10 @@ public class TerminItem implements Comparable<TerminItem> {
 					+ " " + obj.getString("b"));
 			item.end = Statics.dateFormatInFull.parse(obj.getString("d") + " "
 					+ obj.getString("e"));
+			// prevent problems when end is earlier than start
+			if (item.start.getTime() > item.end.getTime()) {
+				item.end = item.start;
+			}
 			item.more = obj.getString("m").equals("Y");
 			item.valid = true;
 		} catch (JSONException e) {

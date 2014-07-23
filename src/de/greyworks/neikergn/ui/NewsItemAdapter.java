@@ -63,21 +63,21 @@ public class NewsItemAdapter extends BaseAdapter implements SpinnerAdapter {
 		String info = "";
 		if (age < 1) {
 			bgCol = parent.getResources().getColor(R.color.lgreen_300);
+			info = " (Heute)";
 		} else if (age < 2) {
 			bgCol = parent.getResources().getColor(R.color.lgreen_200);
-			info = " - 1 Tag alt";
+			info = " (Gestern)";
 		} else if (age < 8) {
 			bgCol = parent.getResources().getColor(R.color.lgreen_100);
-			info = " - " + curItem.getAge() + " Tage alt";
+			info = " (vor " + age + " Tagen)";
 		} else {
 			bgCol = parent.getResources().getColor(R.color.lgreen_50);
-			info = " - " + curItem.getAge() + " Tage alt";
+			info = " (vor " + age + " Tagen)";
 		}
 		holder.spacer.setBackgroundColor(bgCol);
 		holder.title.setBackgroundColor(bgCol);
 		holder.title.setText(Html.fromHtml(curItem.getTitle()));
-		holder.info.setText(curItem.getDate() + " - " + curItem.getSource()
-				+ info);
+		holder.info.setText(curItem.getSource() + " - " + curItem.getDate() + info);
 		return convertView;
 	}
 

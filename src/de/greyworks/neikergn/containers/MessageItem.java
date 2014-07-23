@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.greyworks.neikergn.Statics;
+import android.text.format.DateFormat;
 import android.util.Log;
 
 public class MessageItem implements Comparable<MessageItem> {
@@ -49,7 +50,7 @@ public class MessageItem implements Comparable<MessageItem> {
 	}
 
 	public String getDate() {
-		return Statics.dateFormatOut.format(this.date);
+		return (String) DateFormat.format("cc., dd. MMMM", date);
 	}
 
 	public int getAge() {

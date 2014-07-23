@@ -1,6 +1,7 @@
 package de.greyworks.neikergn.containers;
 
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,6 +9,8 @@ import java.util.regex.Pattern;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.text.format.DateFormat;
+import android.text.format.DateUtils;
 import android.util.Log;
 import de.greyworks.neikergn.Statics;
 
@@ -62,7 +65,7 @@ public class NewsItem implements Comparable<NewsItem> {
 	}
 
 	public String getDate() {
-		return Statics.dateFormatOut.format(this.date);
+		return (String) DateFormat.format("cc., dd. MMMM", date);
 	}
 
 	public int getAge() {
